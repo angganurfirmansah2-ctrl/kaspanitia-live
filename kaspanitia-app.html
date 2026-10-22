@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KasPanitia</title>
+    <style>
+      :root {
+        --bg: #f4f7f5;
+        --bg-soft: #edf3ef;
+        --panel: #ffffff;
+        --panel-soft: #f8faf8;
+        --primary: #1d5f42;
+        --primary-2: #2f7459;
+        --primary-3: #eaf7ee;
+        --text: #17271f;
+        --muted: #66776d;
+        --line: #dfe9e1;
+        --success: #16824d;
+        --danger: #ca4949;
+        --warning: #d88c1d;
+        --info: #2d6ec8;
+        --shadow: 0 12px 28px rgba(18, 38, 29, 0.08);
+        --radius: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: linear-gradient(180deg, var(--bg), var(--bg-soft));
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .page {
+        display: none;
+      }
+
+      .page.active {
+        display: block;
+      }
+
+      .login-page {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background:
+          radial-gradient(circle at top left, rgba(142, 210, 173, 0.18), transparent 28%),
+          linear-gradient(180deg, #f3f7f4, #edf3ef);
+      }
+
+      .login-card {
+        width: min(100%, 440px);
+        background: var(--panel);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(90, 108, 98, 0.08);
+        overflow: hidden;
+      }
+
+      .login-header {
+        background: linear-gradient(180deg, #112d20 0%, #163f2e 100%);
+        color: white;
+        padding: 28px 24px 22px;
+      }
+
+      .brand-login {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .brand-badge {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #7ecfa9, #2d7a5c);
+        color: white;
+        font-weight: 800;
+      }
+
+      .brand-login h2 {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+
+      .login-header p {
+        margin: 6px 0 0;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.92rem;
+      }
+
+      .login-body {
+        padding: 24px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+
+      label {
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 600;
+      }
+
+      input, select, textarea {
+        width: 100%;
+        border: 1px solid var(--line);
+        background: #fbfdfc;
+        border-radius: 12px;
+        color: var(--text);
+        padding: 12px 13px;
+        outline: none;
+        transition: 0.2s ease;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: rgba(29, 95, 66, 0.45);
+        box-shadow: 0 0 0 3px rgba(29, 95, 66, 0.08);
+      }
+
+      .role-login {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+      }
+
+      .chip-role {
+        padding: 7px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--panel-soft);
+        color: var(--muted);
+        font-size: 0.78rem;
+        cursor: pointer;
+      }
+
+      .chip-role.active {
+        background: var(--primary-3);
+        border-color: rgba(29, 95, 66, 0.2);
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .btn.primary {
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 8px 18px rgba(29, 95, 66, 0.22);
+      }
+
+      .btn.primary:hover {
+        background: var(--primary-2);
+      }
+
+      .btn.soft {
+        background: var(--panel);
+        color: var(--text);
+        border: 1px solid var(--line);
+      }
+
+      .btn.soft:hover {
+        background: var(--panel-soft);
+      }
+
+      .login-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 8px;
+      }
+
+      .app-shell {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        background: linear-gradient(180deg, #102a1d 0%, #183b2b 100%);
+        color: #edf7f0;
+        padding: 22px 18px;
+        z-index: 30;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 8px 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        margin-bottom: 12px;
+      }
+
+      .brand-badge {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #7ecfa9, #2d7a5c);
+        color: white;
+        font-weight: 800;
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-size: 1.05rem;
+      }
+
+      .brand small {
+        display: block;
+        margin-top: 2px;
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      .nav-group {
+        margin-top: 12px;
+      }
+
+      .nav-title {
+        padding: 10px 12px;
+        font-size: 0.7rem;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.58);
+      }
+
+      .nav-item {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.82);
+        padding: 12px 12px;
+        border-radius: 12px;
+        margin: 3px 0;
+        text-align: left;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .nav-item:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .nav-item.active {
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+      }
+
+      .nav-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .main {
+        padding: 26px 28px 40px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 20px;
+      }
+
+      .topbar-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 10px 14px;
+        box-shadow: var(--shadow);
+      }
+
+      .search-box input {
+        width: 100%;
+        border: none;
+        outline: none;
+        background: transparent;
+        color: var(--text);
+      }
+
+      .mobile-toggle {
+        display: none;
+        width: 42px;
+        height: 42px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        cursor: pointer;
+        z-index: 110;
+      }
+
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .role-switch {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 6px;
+        box-shadow: var(--shadow);
+      }
+
+      .role-btn {
+        border: none;
+        background: transparent;
+        color: var(--muted);
+        padding: 8px 12px;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .role-btn.active {
+        background: var(--primary-3);
+        color: var(--primary);
+      }
+
+      .user-badge {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 8px 12px;
+        box-shadow: var(--shadow);
+      }
+
+      .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #d8f0de, #82c7a2);
+        color: var(--primary);
+        font-weight: 800;
+      }
+
+      .user-label {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+      }
+
+      .user-label strong {
+        font-size: 0.9rem;
+      }
+
+      .user-label small {
+        color: var(--muted);
+        font-size: 0.74rem;
+      }
+
+      .page-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .page-header h2 {
+        margin: 0;
+        font-size: clamp(1.7rem, 2vw, 2.2rem);
+      }
+
+      .page-header p {
+        margin: 7px 0 0;
+        color: var(--muted);
+      }
+
+      .status-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .status-chip {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        color: var(--muted);
+        border-radius: 999px;
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+
+      .status-chip.active {
+        background: var(--primary-3);
+        border-color: rgba(29, 95, 66, 0.2);
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      .content-wrapper {
+        display: grid;
+        gap: 22px;
+      }
+
+      .section-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .card {
+        background: var(--panel);
+        border-radius: var(--radius);
+        border: 1px solid rgba(90, 108, 98, 0.08);
+        box-shadow: var(--shadow);
+      }
+
+      .stat-card {
+        padding: 18px 18px 16px;
+      }
+
+      .stat-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 16px;
+      }
+
+      .label {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      .stat-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-size: 1.08rem;
+      }
+
+      .icon-green { background: #ebfaf0; color: var(--success); }
+      .icon-red { background: #fdecec; color: var(--danger); }
+      .icon-blue { background: #ebf3ff; color: var(--info); }
+      .icon-gold { background: #fff5df; color: var(--warning); }
+
+      .stat-value {
+        margin: 0;
+        font-weight: 800;
+        font-size: clamp(1.35rem, 2vw, 2rem);
+      }
+
+      .trend {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 8px;
+        padding: 5px 8px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+      }
+
+      .trend.up { background: #eafaf0; color: var(--success); }
+      .trend.down { background: #fdecec; color: var(--danger); }
+
+      .main-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 22px;
+        margin-top: 22px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      .panel-header h3 {
+        margin: 0;
+        font-size: 1.08rem;
+      }
+
+      .meta {
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      .bar-chart {
+        height: 190px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 10px;
+        padding-top: 10px;
+      }
+
+      .bar-col {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: end;
+        gap: 8px;
+      }
+
+      .bar {
+        width: 100%;
+        max-width: 38px;
+        min-height: 20px;
+        border-radius: 10px 10px 0 0;
+        background: linear-gradient(180deg, #98d1a5 0%, var(--primary) 100%);
+      }
+
+      .bar.alt {
+        background: linear-gradient(180deg, #daf6e6 0%, #6b9d80 100%);
+      }
+
+      .bar-label {
+        color: var(--muted);
+        font-size: 0.72rem;
+      }
+
+      .mini-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .mini-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 8px;
+        border-radius: 12px;
+        background: #f9fbf9;
+      }
+
+      .mini-bullet {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
+      .mini-item strong {
+        display: block;
+        font-size: 0.92rem;
+      }
+
+      .mini-item small {
+        color: var(--muted);
+      }
+
+      .mini-item .value {
+        margin-left: auto;
+        font-weight: 700;
+      }
+
+      .two-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 22px;
+      }
+
+      .table-wrap {
+        overflow: auto;
+      }
+
+      table {
+        width: 100%;
+        min-width: 700px;
+        border-collapse: collapse;
+      }
+
+      th, td {
+        padding: 14px 12px;
+        text-align: left;
+        vertical-align: middle;
+        border-bottom: 1px solid var(--line);
+      }
+
+      th {
+        background: #fafcfb;
+        color: var(--muted);
+        font-size: 0.78rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      tbody tr:hover {
+        background: #f9fcfa;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 7px 10px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .status.paid { background: #eafaf0; color: var(--success); }
+      .status.pending { background: #fff4df; color: var(--warning); }
+      .status.review { background: #ebf0ff; color: var(--info); }
+      .status.cancelled { background: #fdecec; color: var(--danger); }
+
+      .money {
+        font-weight: 700;
+      }
+
+      .money.in { color: var(--success); }
+      .money.out { color: var(--danger); }
+
+      .action-link {
+        color: var(--primary);
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .form-panel {
+        background: var(--panel);
+        border-radius: var(--radius);
+        border: 1px solid rgba(90, 108, 98, 0.08);
+        box-shadow: var(--shadow);
+        padding: 18px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .field.full {
+        grid-column: 1 / -1;
+      }
+
+      .upload-box {
+        text-align: center;
+        padding: 16px;
+        border: 1.5px dashed #cfe4d6;
+        background: #f7fbf8;
+        border-radius: 14px;
+      }
+
+      .upload-box strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .upload-box small {
+        color: var(--muted);
+      }
+
+      .upload-box input[type="file"] {
+        display: none;
+      }
+
+      .upload-label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 12px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        background: var(--primary);
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .file-preview {
+        display: none;
+        margin-top: 12px;
+        padding: 10px;
+        border-radius: 12px;
+        background: #f2f8f4;
+        border: 1px solid #dfeae3;
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .file-preview.show {
+        display: block;
+      }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .list-card {
+        padding: 16px;
+        border-radius: 16px;
+        background: var(--panel-soft);
+        border: 1px solid var(--line);
+      }
+
+      .mini-label {
+        color: var(--muted);
+        font-size: 0.76rem;
+        margin-bottom: 8px;
+      }
+
+      .big-number {
+        font-size: 1.7rem;
+        font-weight: 800;
+      }
+
+      .footer-note {
+        margin-top: 24px;
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      @media (max-width: 1100px) {
+        .section-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .main-grid,
+        .two-grid,
+        .card-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 840px) {
+        .app-shell {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: fixed;
+          left: -100%;
+          top: 0;
+          width: 82%;
+          max-width: 300px;
+          z-index: 100;
+          box-shadow: 12px 0 40px rgba(0, 0, 0, 0.12);
+          transition: left 0.25s ease;
+        }
+
+        .sidebar.open {
+          left: 0;
+        }
+
+        .mobile-toggle {
+          display: inline-grid;
+          place-items: center;
+        }
+
+        .topbar {
+          flex-wrap: wrap;
+        }
+
+        .topbar-left {
+          width: 100%;
+        }
+
+        .search-box {
+          width: 100%;
+        }
+
+        .topbar-right {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .page-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .main {
+          padding: 18px 16px 24px;
+        }
+
+        .section-grid,
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .user-badge {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loginPage" class="page login-page active">
+      <div class="login-card">
+        <div class="login-header">
+          <div class="brand-login">
+            <div class="brand-badge">K</div>
+            <h2>KasPanitia</h2>
+          </div>
+          <p>Masuk ke sistem keuangan kepanitiaan</p>
+        </div>
+
+        <div class="login-body">
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" value="bendahara@kaspanitia.local" />
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" type="password" value="123456" />
+          </div>
+
+          <div class="field">
+            <label>Login sebagai</label>
+            <div class="role-login">
+              <button class="chip-role active" data-role="bendahara" type="button">Bendahara</button>
+              <button class="chip-role" data-role="admin" type="button">Admin</button>
+              <button class="chip-role" data-role="koordinator" type="button">Koordinator</button>
+              <button class="chip-role" data-role="ketua" type="button">Ketua</button>
+            </div>
+          </div>
+
+          <div class="login-actions">
+            <button class="btn primary" id="loginBtn" type="button">Masuk</button>
+            <button class="btn soft" type="button">Lupa Password?</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="appPage" class="page">
+      <div class="app-shell">
+        <aside class="sidebar" id="sidebar">
+          <div class="brand">
+            <div class="brand-badge">K</div>
+            <div>
+              <h1>KasPanitia</h1>
+              <small>Finance System</small>
+            </div>
+          </div>
+
+          <div id="navContainer"></div>
+        </aside>
+
+        <main class="main">
+          <div class="topbar">
+            <div class="topbar-left">
+              <button class="mobile-toggle" id="mobileToggle" aria-label="Buka menu">☰</button>
+              <div class="search-box">
+                <span>🔎</span>
+                <input type="text" placeholder="Cari transaksi, pengajuan, atau bukti..." />
+              </div>
+            </div>
+
+            <div class="topbar-right">
+              <div class="role-switch" id="roleSwitch"></div>
+              <button class="btn soft" type="button">🔔 Notifikasi</button>
+              <button class="btn primary" id="quickAction" type="button">+ Buat Transaksi</button>
+
+              <div class="user-badge">
+                <div class="avatar" id="avatarInitial">B</div>
+                <div class="user-label">
+                  <strong id="userRoleDisplay">Bendahara</strong>
+                  <small id="userNameDisplay">Rina A.</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-header">
+            <div>
+              <h2 id="pageTitle">Dashboard Bendahara</h2>
+              <p id="pageSubtitle">Monitoring keuangan dan realisasi anggaran</p>
+            </div>
+
+            <div class="status-row">
+              <button class="status-chip active" type="button">Hari Ini</button>
+              <button class="status-chip" type="button">Minggu Ini</button>
+              <button class="status-chip" type="button">Bulan Ini</button>
+              <button class="status-chip" type="button">Kustom</button>
+            </div>
+          </div>
+
+          <div class="content-wrapper">
+            <div id="dashboardSection">
+              <div class="section-grid" id="statsGrid"></div>
+
+              <div class="main-grid">
+                <div class="card panel">
+                  <div class="panel-header">
+                    <h3 id="chartTitle">Realisasi Anggaran</h3>
+                    <span class="meta" id="chartMeta">Oktober 2026</span>
+                  </div>
+
+                  <div class="bar-chart">
+                    <div class="bar-col"><div class="bar" style="height: 58%;"></div><div class="bar-label">Jan</div></div>
+                    <div class="bar-col"><div class="bar alt" style="height: 62%;"></div><div class="bar-label">Feb</div></div>
+                    <div class="bar-col"><div class="bar" style="height: 70%;"></div><div class="bar-label">Mar</div></div>
+                    <div class="bar-col"><div class="bar alt" style="height: 75%;"></div><div class="bar-label">Apr</div></div>
+                    <div class="bar-col"><div class="bar" style="height: 68%;"></div><div class="bar-label">Mei</div></div>
+                    <div class="bar-col"><div class="bar alt" style="height: 82%;"></div><div class="bar-label">Jun</div></div>
+                    <div class="bar-col"><div class="bar" style="height: 90%;"></div><div class="bar-label">Jul</div></div>
+                  </div>
+                </div>
+
+                <div class="card panel">
+                  <div class="panel-header">
+                    <h3 id="summaryTitle">Ringkasan</h3>
+                    <span class="meta" id="summaryMeta">RAB aktif</span>
+                  </div>
+                  <div class="mini-list" id="summaryList"></div>
+                </div>
+              </div>
+            </div>
+
+            <div id="transactionsSection" class="hidden">
+              <div class="two-grid">
+                <div class="card panel">
+                  <div class="panel-header">
+                    <h3 id="tableTitle">Transaksi Terbaru</h3>
+                    <span class="meta" id="tableMeta">10 catatan terakhir</span>
+                  </div>
+
+                  <div class="table-wrap">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Transaksi</th>
+                          <th>Kategori</th>
+                          <th>Divisi</th>
+                          <th>Nilai</th>
+                          <th>Status</th>
+                          <th>Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody id="transactionTableBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="form-panel">
+                  <div class="panel-header">
+                    <h3 id="formTitle">Catat Transaksi</h3>
+                    <span class="meta" id="formMeta">Form transaksi</span>
+                  </div>
+
+                  <form>
+                    <div class="form-grid">
+                      <div class="field">
+                        <label for="jenis">Jenis</label>
+                        <select id="jenis">
+                          <option>Pemasukan</option>
+                          <option>Pengeluaran</option>
+                          <option>Transfer Internal</option>
+                        </select>
+                      </div>
+
+                      <div class="field">
+                        <label for="akun">Akun</label>
+                        <select id="akun">
+                          <option>Kas Tunai</option>
+                          <option>Bank BNI</option>
+                          <option>Bank Mandiri</option>
+                        </select>
+                      </div>
+
+                      <div class="field">
+                        <label for="divisi">Divisi</label>
+                        <select id="divisi">
+                          <option>Acara</option>
+                          <option>Publikasi</option>
+                          <option>Logistik</option>
+                          <option>Umum</option>
+                        </select>
+                      </div>
+
+                      <div class="field">
+                        <label for="nominal">Nominal</label>
+                        <input id="nominal" type="text" value="Rp 2.500.000" />
+                      </div>
+
+                      <div class="field full">
+                        <label for="keterangan">Keterangan</label>
+                        <textarea id="keterangan" placeholder="Masukkan keterangan transaksi..."></textarea>
+                      </div>
+
+                      <div class="field full">
+                        <label>Bukti Transaksi</label>
+                        <div class="upload-box">
+                          <strong>Unggah bukti pembayaran</strong>
+                          <small>Format didukung: JPG, PNG, WEBP</small>
+                          <label class="upload-label" for="fileUpload">Pilih File</label>
+                          <input type="file" id="fileUpload" accept=".jpg,.jpeg,.png,.webp" />
+                          <div id="fileName" class="file-preview">Belum ada file dipilih</div>
+                        </div>
+                      </div>
+
+                      <div class="field full">
+                        <button class="btn primary" type="button" style="width:100%;">Simpan Transaksi</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div id="fundingSection" class="hidden">
+              <div class="card panel">
+                <div class="panel-header">
+                  <h3>Pengajuan Dana</h3>
+                  <span class="meta">Status semua pengajuan</span>
+                </div>
+
+                <div class="card-grid">
+                  <div class="list-card">
+                    <div class="mini-label">Pengajuan Baru</div>
+                    <div class="big-number">12</div>
+                  </div>
+                  <div class="list-card">
+                    <div class="mini-label">Diterima</div>
+                    <div class="big-number">8</div>
+                  </div>
+                  <div class="list-card">
+                    <div class="mini-label">Diproses</div>
+                    <div class="big-number">3</div>
+                  </div>
+                  <div class="list-card">
+                    <div class="mini-label">Ditolak</div>
+                    <div class="big-number">1</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="reportSection" class="hidden">
+              <div class="card panel">
+                <div class="panel-header">
+                  <h3>Laporan Keuangan</h3>
+                  <span class="meta">PDF / Excel</span>
+                </div>
+
+                <div class="card-grid">
+                  <div class="list-card">
+                    <div class="mini-label">Pemasukan</div>
+                    <div class="big-number">Rp 48.500.000</div>
+                  </div>
+                  <div class="list-card">
+                    <div class="mini-label">Pengeluaran</div>
+                    <div class="big-number">Rp 31.200.000</div>
+                  </div>
+                  <div class="list-card">
+                    <div class="mini-label">Saldo Kas</div>
+                    <div class="big-number">Rp 12.800.000</div>
+                  </div>
+                  <div class="list-card">
+                    <div class="mini-label">Saldo Bank</div>
+                    <div class="big-number">Rp 26.300.000</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="profileSection" class="hidden">
+              <div class="card panel">
+                <div class="panel-header">
+                  <h3>Profil</h3>
+                  <span class="meta">Informasi akun</span>
+                </div>
+
+                <div class="card-grid">
+                  <div class="list-card">
+                    <div class="mini-label">Nama</div>
+                    <div class="big-number">Rina A.</div>
+                  </div>
+                  <div class="list-card">
+                    <div class="mini-label">Role</div>
+                    <div class="big-number">Bendahara</div>
+                  </div>
+                  <div class="list-card">
+                    <div class="mini-label">Email</div>
+                    <div class="big-number">bendahara@kaspanitia.local</div>
+                  </div>
+                  <div class="list-card">
+                    <div class="mini-label">Status</div>
+                    <div class="big-number">Aktif</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-note">
+            KasPanitia • Sistem Keuangan Kepanitiaan
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      const roles = {
+        admin: {
+          label: "Admin",
+          pageTitle: "Dashboard Admin",
+          subtitle: "Manajemen organisasi, pengguna, dan konfigurasi sistem",
+          user: { name: "Siti Admin", initial: "A" },
+          quickAction: "+ Tambah User",
+          nav: [
+            { label: "Dashboard", icon: "🏠", active: true, section: "dashboard" },
+            { label: "Pengguna", icon: "👥", section: "dashboard" },
+            { label: "Role", icon: "🛡️", section: "dashboard" },
+            { label: "Transaksi", icon: "💸", section: "transactions" },
+            { label: "Pengajuan", icon: "📄", section: "funding" },
+            { label: "Laporan", icon: "📚", section: "report" },
+            { label: "Profil", icon: "👤", section: "profile" }
+          ],
+          stats: [
+            { label: "Total User", value: "128", icon: "icon-blue", trend: "▲ 10.5% bulan lalu", trendType: "up" },
+            { label: "Jumlah Role", value: "4", icon: "icon-green", trend: "▲ 1 role baru", trendType: "up" },
+            { label: "Divisi Aktif", value: "18", icon: "icon-gold", trend: "▲ 3 divisi", trendType: "up" },
+            { label: "Sistem", value: "Normal", icon: "icon-red", trend: "● Online", trendType: "up" }
+          ],
+          summary: [
+            { label: "Kepanitiaan", value: "12", extra: "aktif", color: "#1d5f42" },
+            { label: "Pengguna Aktif", value: "96%", extra: "dari total", color: "#68b487" },
+            { label: "Role Belum Aktif", value: "0", extra: "tersedia", color: "#d88a14" },
+            { label: "Akun Nonaktif", value: "12", extra: "perlu review", color: "#2d6ec8" }
+          ],
+          chartTitle: "Aktivitas Sistem",
+          chartMeta: "Triwulan Oktober",
+          summaryTitle: "Statistik Organisasi",
+          summaryMeta: "Data master",
+          tableTitle: "Log Aktivitas Terbaru",
+          tableMeta: "8 aktivitas terakhir",
+          formTitle: "Tambah Pengguna",
+          formMeta: "Form manajemen akun"
+        },
+
+        koordinator: {
+          label: "Koordinator Divisi",
+          pageTitle: "Dashboard Koordinator",
+          subtitle: "Ringkasan kebutuhan divisi dan status pengajuan",
+          user: { name: "Dewi K.", initial: "K" },
+          quickAction: "+ Ajukan Dana",
+          nav: [
+            { label: "Dashboard", icon: "🏠", active: true, section: "dashboard" },
+            { label: "Pengajuan", icon: "📄", section: "funding" },
+            { label: "Riwayat", icon: "🧾", section: "funding" },
+            { label: "Laporan", icon: "📚", section: "report" },
+            { label: "Profil", icon: "👤", section: "profile" }
+          ],
+          stats: [
+            { label: "Total Pengajuan", value: "12", icon: "icon-blue", trend: "▲ 2 baru", trendType: "up" },
+            { label: "Anggaran Divisi", value: "Rp 18.000.000", icon: "icon-green", trend: "▲ 8.4%", trendType: "up" },
+            { label: "Sudah Diproses", value: "9", icon: "icon-gold", trend: "▲ 3 item", trendType: "up" },
+            { label: "Belum Selesai", value: "3", icon: "icon-red", trend: "▼ 1 item", trendType: "down" }
+          ],
+          summary: [
+            { label: "RAB Divisi", value: "Rp 18.000.000", extra: "total anggaran", color: "#1d5f42" },
+            { label: "Realisasi", value: "Rp 11.500.000", extra: "tercatat", color: "#68b487" },
+            { label: "Sisa Dana", value: "Rp 6.500.000", extra: "tersedia", color: "#d88a14" },
+            { label: "Pengajuan Aktif", value: "3", extra: "belum ditutup", color: "#2d6ec8" }
+          ],
+          chartTitle: "Pemakaian Divisi",
+          chartMeta: "Januari – Juli",
+          summaryTitle: "Status Divisi",
+          summaryMeta: "Per divisi",
+          tableTitle: "Pengajuan Terbaru",
+          tableMeta: "5 item terakhir",
+          formTitle: "Buat Pengajuan Dana",
+          formMeta: "Koordinator divisi"
+        },
+
+        bendahara: {
+          label: "Bendahara",
+          pageTitle: "Dashboard Bendahara",
+          subtitle: "Monitoring keuangan kepanitiaan",
+          user: { name: "Rina A.", initial: "B" },
+          quickAction: "+ Buat Transaksi",
+          nav: [
+            { label: "Dashboard", icon: "🏠", active: true, section: "dashboard" },
+            { label: "Transaksi", icon: "💸", section: "transactions" },
+            { label: "Pengajuan", icon: "📄", section: "funding" },
+            { label: "Bukti", icon: "🧾", section: "transactions" },
+            { label: "Laporan", icon: "📚", section: "report" },
+            { label: "Profil", icon: "👤", section: "profile" }
+          ],
+          stats: [
+            { label: "Pemasukan", value: "Rp 48.500.000", icon: "icon-green", trend: "▲ 12.4% bulan lalu", trendType: "up" },
+            { label: "Pengeluaran", value: "Rp 31.200.000", icon: "icon-red", trend: "▼ 3.1% bulan lalu", trendType: "down" },
+            { label: "Saldo Kas", value: "Rp 12.800.000", icon: "icon-blue", trend: "▲ 8.9% saldo awal", trendType: "up" },
+            { label: "Saldo Bank", value: "Rp 26.300.000", icon: "icon-gold", trend: "▲ 5.2% akhir minggu", trendType: "up" }
+          ],
+          summary: [
+            { label: "RAB Total", value: "Rp 90.000.000", extra: "seluruh divisi", color: "#1d5f42" },
+            { label: "Realisasi", value: "Rp 61.500.000", extra: "tercatat", color: "#68b487" },
+            { label: "Sisa Anggaran", value: "Rp 28.500.000", extra: "belum terpakai", color: "#d88a14" },
+            { label: "Pengajuan Aktif", value: "7", extra: "belum ditutup", color: "#2d6ec8" }
+          ],
+          chartTitle: "Realisasi Anggaran",
+          chartMeta: "Oktober 2026",
+          summaryTitle: "Ringkasan Anggaran",
+          summaryMeta: "RAB aktif",
+          tableTitle: "Transaksi Terbaru",
+          tableMeta: "10 catatan terakhir",
+          formTitle: "Catat Transaksi",
+          formMeta: "Form transaksi"
+        },
+
+        ketua: {
+          label: "Ketua Panitia",
+          pageTitle: "Dashboard Ketua",
+          subtitle: "Pantauan kondisi keuangan dan evaluasi laporan",
+          user: { name: "Nanda K.", initial: "K" },
+          quickAction: "+ Lihat Laporan",
+          nav: [
+            { label: "Dashboard", icon: "🏠", active: true, section: "dashboard" },
+            { label: "Transaksi", icon: "💸", section: "transactions" },
+            { label: "Bukti", icon: "🧾", section: "transactions" },
+            { label: "Laporan", icon: "📚", section: "report" },
+            { label: "Profil", icon: "👤", section: "profile" }
+          ],
+          stats: [
+            { label: "Kas Tunai", value: "Rp 12.800.000", icon: "icon-green", trend: "▲ stabil", trendType: "up" },
+            { label: "Bank", value: "Rp 26.300.000", icon: "icon-blue", trend: "▲ konsisten", trendType: "up" },
+            { label: "Pemasukan", value: "Rp 48.500.000", icon: "icon-gold", trend: "▲ 12.4%", trendType: "up" },
+            { label: "Pengeluaran", value: "Rp 31.200.000", icon: "icon-red", trend: "▼ 3.1%", trendType: "down" }
+          ],
+          summary: [
+            { label: "Saldo Total", value: "Rp 39.100.000", extra: "kas + bank", color: "#1d5f42" },
+            { label: "Realisasi RAB", value: "68%", extra: "dari target", color: "#68b487" },
+            { label: "Tren Transaksi", value: "Naik", extra: "bulan ini", color: "#d88a14" },
+            { label: "Laporan Siap", value: "4", extra: "dokumen", color: "#2d6ec8" }
+          ],
+          chartTitle: "Tren Keuangan",
+          chartMeta: "Juni – Oktober",
+          summaryTitle: "Ringkasan Keuangan",
+          summaryMeta: "Pemantauan ketua",
+          tableTitle: "Transaksi Terakhir",
+          tableMeta: "7 item terakhir",
+          formTitle: "Lihat Laporan",
+          formMeta: "Monitoring"
+        }
+      };
+
+      let activeRole = "bendahara";
+      let activeSection = "dashboard";
+      let selectedRole = "bendahara";
+
+      function formatRupiah(value) {
+        const raw = String(value).replace(/[^\d]/g, "");
+        const num = Number(raw || 0);
+        return new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        }).format(num);
+      }
+
+      function setSection(section) {
+        activeSection = section;
+
+        const sections = ["dashboard", "transactions", "funding", "report", "profile"];
+        sections.forEach(name => {
+          const el = document.getElementById(name + "Section");
+          if (el) {
+            el.classList.toggle("hidden", name !== section);
+          }
+        });
+      }
+
+      function renderRoleButtons() {
+        const roleSwitch = document.getElementById("roleSwitch");
+        if (!roleSwitch) return;
+
+        roleSwitch.innerHTML = "";
+
+        Object.entries(roles).forEach(([key, data]) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "role-btn" + (key === activeRole ? " active" : "");
+          btn.dataset.role = key;
+          btn.textContent = data.label;
+
+          btn.addEventListener("click", () => {
+            activeRole = key;
+            renderPage();
+          });
+
+          roleSwitch.appendChild(btn);
+        });
+      }
+
+      function renderNavMenu() {
+        const navContainer = document.getElementById("navContainer");
+        if (!navContainer) return;
+
+        const role = roles[activeRole];
+        navContainer.innerHTML = `
+          <div class="nav-group">
+            <div class="nav-title">Menu</div>
+            ${role.nav.map(item => `
+              <button class="nav-item ${item.section === activeSection ? "active" : ""}" type="button" data-section="${item.section}">
+                <span class="nav-icon">${item.icon}</span>
+                ${item.label}
+              </button>
+            `).join("")}
+          </div>
+
+          <div class="nav-group">
+            <div class="nav-title">Akun</div>
+            <button class="nav-item" type="button" data-section="profile"><span class="nav-icon">👤</span> Profil</button>
+            <button class="nav-item" type="button" data-section="dashboard"><span class="nav-icon">⚙️</span> Pengaturan</button>
+          </div>
+        `;
+
+        navContainer.querySelectorAll(".nav-item").forEach(item => {
+          item.addEventListener("click", () => {
+            const section = item.dataset.section || "dashboard";
+            setSection(section);
+
+            navContainer.querySelectorAll(".nav-item").forEach(i => i.classList.remove("active"));
+            item.classList.add("active");
+          });
+        });
+      }
+
+      function renderStats() {
+        const role = roles[activeRole];
+        const statsGrid = document.getElementById("statsGrid");
+        if (!statsGrid) return;
+
+        statsGrid.innerHTML = role.stats.map(item => `
+          <div class="card stat-card">
+            <div class="stat-top">
+              <div><p class="label">${item.label}</p></div>
+              <div class="stat-icon ${item.icon}">${item.trendType === "down" ? "↘" : "↗"}</div>
+            </div>
+            <p class="stat-value">${item.value}</p>
+            <span class="trend ${item.trendType === "down" ? "down" : "up"}">
+              ${item.trendType === "down" ? "▼" : "▲"} ${item.trend}
+            </span>
+          </div>
+        `).join("");
+      }
+
+      function renderSummary() {
+        const role = roles[activeRole];
+        const summaryList = document.getElementById("summaryList");
+        if (!summaryList) return;
+
+        summaryList.innerHTML = role.summary.map(item => `
+          <div class="mini-item">
+            <span class="mini-bullet" style="background:${item.color};"></span>
+            <div>
+              <strong>${item.label}</strong>
+              <small>${item.extra}</small>
+            </div>
+            <div class="value">${item.value}</div>
+          </div>
+        `).join("");
+      }
+
+      function renderTable() {
+        const tableBody = document.getElementById("transactionTableBody");
+        if (!tableBody) return;
+
+        const data = [
+          { code: "TRX-1042", category: "Logistik", division: "Acara", value: "-3500000", status: "paid" },
+          { code: "TRX-1039", category: "Donasi", division: "Umum", value: "+8000000", status: "paid" },
+          { code: "TRX-1037", category: "Transport", division: "Publikasi", value: "-2150000", status: "pending" },
+          { code: "TRX-1034", category: "Honor", division: "Panitia", value: "-5750000", status: "review" },
+          { code: "TRX-1032", category: "Transfer Internal", division: "Keuangan", value: "+6000000", status: "paid" }
+        ];
+
+        tableBody.innerHTML = data.map(row => {
+          const isPositive = row.value.startsWith("+");
+          const statusText =
+            row.status === "paid" ? "Diposting" :
+            row.status === "pending" ? "Menunggu" :
+            row.status === "review" ? "Tinjau" :
+            "Dibatalkan";
+
+          return `
+            <tr>
+              <td>${row.code}</td>
+              <td>${row.category}</td>
+              <td>${row.division}</td>
+              <td class="money ${isPositive ? "in" : "out"}">${formatRupiah(row.value.replace(/[+]/g, ""))}</td>
+              <td><span class="status ${row.status}">${statusText}</span></td>
+              <td><span class="action-link">Detail</span></td>
+            </tr>
+          `;
+        }).join("");
+      }
+
+      function renderLabels() {
+        const role = roles[activeRole];
+        document.getElementById("pageTitle").textContent = role.pageTitle;
+        document.getElementById("pageSubtitle").textContent = role.subtitle;
+        document.getElementById("userRoleDisplay").textContent = role.label;
+        document.getElementById("userNameDisplay").textContent = role.user.name;
+        document.getElementById("avatarInitial").textContent = role.user.initial;
+        document.getElementById("quickAction").textContent = role.quickAction;
+
+        document.getElementById("chartTitle").textContent = role.chartTitle;
+        document.getElementById("chartMeta").textContent = role.chartMeta;
+        document.getElementById("summaryTitle").textContent = role.summaryTitle;
+        document.getElementById("summaryMeta").textContent = role.summaryMeta;
+        document.getElementById("tableTitle").textContent = role.tableTitle;
+        document.getElementById("tableMeta").textContent = role.tableMeta;
+        document.getElementById("formTitle").textContent = role.formTitle;
+        document.getElementById("formMeta").textContent = role.formMeta;
+      }
+
+      function renderPage() {
+        renderRoleButtons();
+        renderNavMenu();
+        renderStats();
+        renderSummary();
+        renderTable();
+        renderLabels();
+        setSection(activeSection);
+      }
+
+      const sidebar = document.getElementById("sidebar");
+      const mobileToggle = document.getElementById("mobileToggle");
+
+      if (mobileToggle) {
+        mobileToggle.addEventListener("click", () => {
+          sidebar.classList.toggle("open");
+        });
+      }
+
+      document.addEventListener("click", (event) => {
+        if (window.innerWidth <= 840) {
+          const clickedInsideSidebar = sidebar.contains(event.target);
+          const clickedToggle = mobileToggle && mobileToggle.contains(event.target);
+
+          if (!clickedInsideSidebar && !clickedToggle) {
+            sidebar.classList.remove("open");
+          }
+        }
+      });
+
+      document.querySelectorAll(".status-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          document.querySelectorAll(".status-chip").forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+        });
+      });
+
+      const fileUpload = document.getElementById("fileUpload");
+      if (fileUpload) {
+        fileUpload.addEventListener("change", function () {
+          const file = this.files && this.files[0];
+          const preview = document.getElementById("fileName");
+          if (file) {
+            preview.textContent = "File terpilih: " + file.name;
+            preview.classList.add("show");
+          } else {
+            preview.textContent = "Belum ada file dipilih";
+            preview.classList.remove("show");
+          }
+        });
+      }
+
+      const nominalInput = document.getElementById("nominal");
+      if (nominalInput) {
+        nominalInput.addEventListener("input", function () {
+          const digits = this.value.replace(/[^\d]/g, "");
+          this.value = digits ? formatRupiah(digits) : "";
+        });
+      }
+
+      document.querySelectorAll(".chip-role").forEach(btn => {
+        btn.addEventListener("click", () => {
+          selectedRole = btn.dataset.role;
+          document.querySelectorAll(".chip-role").forEach(item => item.classList.remove("active"));
+          btn.classList.add("active");
+
+          const emailMap = {
+            admin: "admin@kaspanitia.local",
+            koordinator: "koordinator@kaspanitia.local",
+            bendahara: "bendahara@kaspanitia.local",
+            ketua: "ketua@kaspanitia.local"
+          };
+
+          const emailInput = document.getElementById("email");
+          const passInput = document.getElementById("password");
+
+          if (emailInput) emailInput.value = emailMap[selectedRole];
+          if (passInput) passInput.value = "123456";
+        });
+      });
+
+      document.getElementById("loginBtn").addEventListener("click", () => {
+        activeRole = selectedRole;
+        document.getElementById("loginPage").classList.add("hidden");
+        document.getElementById("appPage").classList.add("active");
+        renderPage();
+      });
+
+      renderPage();
+    </script>
+  </body>
+</html>
