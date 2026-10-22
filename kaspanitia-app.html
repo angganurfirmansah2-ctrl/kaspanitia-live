@@ -68,159 +68,6 @@
         display: block;
       }
 
-      .login-page {
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        padding: 24px;
-        background:
-          radial-gradient(circle at top left, rgba(142, 210, 173, 0.18), transparent 28%),
-          linear-gradient(180deg, #f3f7f4, #edf3ef);
-      }
-
-      .login-card {
-        width: min(100%, 440px);
-        background: var(--panel);
-        border-radius: 24px;
-        box-shadow: var(--shadow);
-        border: 1px solid rgba(90, 108, 98, 0.08);
-        overflow: hidden;
-      }
-
-      .login-header {
-        background: linear-gradient(180deg, #112d20 0%, #163f2e 100%);
-        color: white;
-        padding: 28px 24px 22px;
-      }
-
-      .brand-login {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 12px;
-      }
-
-      .brand-badge {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-        display: grid;
-        place-items: center;
-        background: linear-gradient(135deg, #7ecfa9, #2d7a5c);
-        color: white;
-        font-weight: 800;
-      }
-
-      .brand-login h2 {
-        margin: 0;
-        font-size: 1.2rem;
-      }
-
-      .login-header p {
-        margin: 6px 0 0;
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 0.92rem;
-      }
-
-      .login-body {
-        padding: 24px;
-      }
-
-      .field {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        margin-bottom: 16px;
-      }
-
-      label {
-        color: var(--muted);
-        font-size: 0.82rem;
-        font-weight: 600;
-      }
-
-      input, select, textarea {
-        width: 100%;
-        border: 1px solid var(--line);
-        background: #fbfdfc;
-        border-radius: 12px;
-        color: var(--text);
-        padding: 12px 13px;
-        outline: none;
-        transition: 0.2s ease;
-      }
-
-      input:focus,
-      select:focus,
-      textarea:focus {
-        border-color: rgba(29, 95, 66, 0.45);
-        box-shadow: 0 0 0 3px rgba(29, 95, 66, 0.08);
-      }
-
-      .role-login {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin-top: 8px;
-      }
-
-      .chip-role {
-        padding: 7px 10px;
-        border-radius: 999px;
-        border: 1px solid var(--line);
-        background: var(--panel-soft);
-        color: var(--muted);
-        font-size: 0.78rem;
-        cursor: pointer;
-      }
-
-      .chip-role.active {
-        background: var(--primary-3);
-        border-color: rgba(29, 95, 66, 0.2);
-        color: var(--primary);
-        font-weight: 700;
-      }
-
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        border: none;
-        border-radius: 12px;
-        padding: 12px 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: 0.2s ease;
-      }
-
-      .btn.primary {
-        background: var(--primary);
-        color: white;
-        box-shadow: 0 8px 18px rgba(29, 95, 66, 0.22);
-      }
-
-      .btn.primary:hover {
-        background: var(--primary-2);
-      }
-
-      .btn.soft {
-        background: var(--panel);
-        color: var(--text);
-        border: 1px solid var(--line);
-      }
-
-      .btn.soft:hover {
-        background: var(--panel-soft);
-      }
-
-      .login-actions {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        margin-top: 8px;
-      }
-
       .app-shell {
         display: grid;
         grid-template-columns: 260px 1fr;
@@ -889,46 +736,7 @@
     </style>
   </head>
   <body>
-    <div id="loginPage" class="page login-page active">
-      <div class="login-card">
-        <div class="login-header">
-          <div class="brand-login">
-            <div class="brand-badge">K</div>
-            <h2>KasPanitia</h2>
-          </div>
-          <p>Masuk ke sistem keuangan kepanitiaan</p>
-        </div>
-
-        <div class="login-body">
-          <div class="field">
-            <label for="email">Email</label>
-            <input id="email" type="email" value="bendahara@kaspanitia.local" />
-          </div>
-
-          <div class="field">
-            <label for="password">Password</label>
-            <input id="password" type="password" value="123456" />
-          </div>
-
-          <div class="field">
-            <label>Login sebagai</label>
-            <div class="role-login">
-              <button class="chip-role active" data-role="bendahara" type="button">Bendahara</button>
-              <button class="chip-role" data-role="admin" type="button">Admin</button>
-              <button class="chip-role" data-role="koordinator" type="button">Koordinator</button>
-              <button class="chip-role" data-role="ketua" type="button">Ketua</button>
-            </div>
-          </div>
-
-          <div class="login-actions">
-            <button class="btn primary" id="loginBtn" type="button">Masuk</button>
-            <button class="btn soft" type="button">Lupa Password?</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="appPage" class="page">
+    <div id="appPage" class="page active">
       <div class="app-shell">
         <aside class="sidebar" id="sidebar">
           <div class="brand">
@@ -1351,18 +1159,6 @@
         document.querySelectorAll(".chip-role").forEach((btn) => {
           btn.classList.toggle("active", btn.dataset.role === role);
         });
-
-        const emailMap = {
-          admin: "admin@kaspanitia.local",
-          koordinator: "koordinator@kaspanitia.local",
-          bendahara: "bendahara@kaspanitia.local",
-          ketua: "ketua@kaspanitia.local"
-        };
-
-        const emailInput = document.getElementById("email");
-        const passInput = document.getElementById("password");
-        if (emailInput) emailInput.value = emailMap[role] || emailInput.value;
-        if (passInput) passInput.value = "123456";
       }
 
       function formatRupiah(value) {
@@ -1601,25 +1397,7 @@
         });
       }
 
-      document.querySelectorAll(".chip-role").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const role = btn.dataset.role;
-          selectedRole = role;
-          activeRole = role;
-          syncLoginRoleSelection(role);
-          renderPage();
-        });
-      });
-
-      document.getElementById("loginBtn").addEventListener("click", () => {
-        activeRole = selectedRole;
-        document.getElementById("loginPage").classList.add("hidden");
-        document.getElementById("appPage").classList.add("active");
-        renderPage();
-      });
-
       renderPage();
-      syncLoginRoleSelection(selectedRole);
     </script>
   </body>
 </html>
