@@ -3,71 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KasPanitia</title>
+    <title>KasPanitia Live</title>
     <style>
       :root {
-        --bg: #f4f7f5;
-        --bg-soft: #edf3ef;
+        --bg: #f3f7f5;
         --panel: #ffffff;
-        --panel-soft: #f8faf8;
-        --primary: #1d5f42;
-        --primary-2: #2f7459;
-        --primary-3: #eaf7ee;
-        --text: #17271f;
-        --muted: #66776d;
-        --line: #dfe9e1;
-        --success: #16824d;
-        --danger: #ca4949;
-        --warning: #d88c1d;
+        --panel-soft: #f8fbfa;
+        --primary: #1d5848;
+        --primary-2: #173e36;
+        --primary-soft: #eaf4f0;
+        --text: #1c2826;
+        --muted: #62736d;
+        --line: #dfe9e3;
+        --success: #197d4d;
+        --danger: #c94d4d;
+        --warning: #b97b1d;
         --info: #2d6ec8;
         --shadow: 0 12px 28px rgba(18, 38, 29, 0.08);
-        --radius: 18px;
+        --radius: 16px;
       }
 
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
       body {
         margin: 0;
-        font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        background: linear-gradient(180deg, var(--bg), var(--bg-soft));
+        font-family: Arial, Helvetica, sans-serif;
+        background: var(--bg);
         color: var(--text);
-        overflow-x: hidden;
+        line-height: 1.5;
       }
+      a { color: inherit; text-decoration: none; }
+      button, input, select, textarea { font: inherit; }
+      button { cursor: pointer; }
 
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
-
-      button,
-      input,
-      select,
-      textarea {
-        font: inherit;
-      }
-
-      button {
-        cursor: pointer;
-      }
-
-      .hidden {
-        display: none !important;
-      }
-
-      .page {
-        display: none;
-      }
-
-      .page.active {
-        display: block;
-      }
-
+      .hidden { display: none !important; }
       .app-shell {
         display: grid;
         grid-template-columns: 260px 1fr;
@@ -78,120 +47,101 @@
         position: sticky;
         top: 0;
         height: 100vh;
-        background: linear-gradient(180deg, #102a1d 0%, #183b2b 100%);
-        color: #edf7f0;
-        padding: 22px 18px;
-        z-index: 30;
+        background: linear-gradient(180deg, var(--primary-2), var(--primary));
+        color: white;
+        padding: 20px 16px;
       }
 
       .brand {
         display: flex;
         align-items: center;
         gap: 12px;
-        padding: 10px 8px 18px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 8px 8px 18px;
+        border-bottom: 1px solid rgba(255,255,255,0.14);
         margin-bottom: 12px;
       }
-
       .brand-badge {
         width: 42px;
         height: 42px;
         border-radius: 12px;
         display: grid;
         place-items: center;
-        background: linear-gradient(135deg, #7ecfa9, #2d7a5c);
-        color: white;
+        background: rgba(255,255,255,0.12);
         font-weight: 800;
       }
+      .brand-title { font-weight: 700; font-size: 1.1rem; }
+      .brand-sub { font-size: 0.74rem; color: rgba(255,255,255,0.72); }
 
-      .brand h1 {
-        margin: 0;
-        font-size: 1.05rem;
-      }
-
-      .brand small {
-        display: block;
-        margin-top: 2px;
-        color: rgba(255, 255, 255, 0.72);
-      }
-
-      .nav-group {
-        margin-top: 12px;
-      }
-
-      .nav-title {
-        padding: 10px 12px;
-        font-size: 0.7rem;
-        letter-spacing: 0.09em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.58);
-      }
-
-      .nav-item {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        background: transparent;
-        border: none;
-        color: rgba(255, 255, 255, 0.82);
-        padding: 12px 12px;
+      .user-box {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.12);
         border-radius: 12px;
-        margin: 3px 0;
+        padding: 10px 12px;
+        margin: 12px 0 18px;
+      }
+      .label-mini {
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.8);
+        display: inline-block;
+        margin-bottom: 8px;
+      }
+      .user-select {
+        width: 100%;
+        border: none;
+        background: transparent;
+        color: #fff;
+        outline: none;
+        font-size: 0.95rem;
+      }
+      .user-select option { color: #111; }
+
+      .nav {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .nav-btn {
+        width: 100%;
+        border: none;
+        background: transparent;
+        color: rgba(255,255,255,0.85);
+        border-radius: 12px;
+        padding: 11px 12px;
         text-align: left;
-        cursor: pointer;
+        font-weight: 700;
         transition: 0.2s ease;
       }
-
-      .nav-item:hover {
-        background: rgba(255, 255, 255, 0.06);
-      }
-
-      .nav-item.active {
-        background: rgba(255, 255, 255, 0.12);
-        color: #fff;
-      }
-
-      .nav-icon {
-        width: 30px;
-        height: 30px;
-        border-radius: 10px;
-        display: grid;
-        place-items: center;
-        background: rgba(255, 255, 255, 0.08);
+      .nav-btn:hover { background: rgba(255,255,255,0.06); }
+      .nav-btn.active {
+        background: rgba(255,255,255,0.12);
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
       }
 
       .main {
-        padding: 26px 28px 40px;
+        padding: 26px 26px 40px;
       }
-
       .topbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 18px;
-        margin-bottom: 20px;
+        gap: 16px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
       }
-
-      .topbar-left {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex: 1;
-      }
-
       .search-box {
+        flex: 1;
+        min-width: 220px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 10px 12px;
         display: flex;
         align-items: center;
         gap: 8px;
-        flex: 1;
-        background: var(--panel);
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        padding: 10px 14px;
         box-shadow: var(--shadow);
       }
-
       .search-box input {
         width: 100%;
         border: none;
@@ -200,1204 +150,1424 @@
         color: var(--text);
       }
 
-      .mobile-toggle {
-        display: none;
-        width: 42px;
-        height: 42px;
-        background: var(--panel);
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        cursor: pointer;
-        z-index: 110;
-      }
-
-      .topbar-right {
+      .right-tools {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
-        gap: 12px;
+        gap: 10px;
         flex-wrap: wrap;
       }
-
-      .role-switch {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
+      .chip {
         background: var(--panel);
         border: 1px solid var(--line);
-        border-radius: 14px;
-        padding: 6px;
-        box-shadow: var(--shadow);
-      }
-
-      .role-btn {
-        border: none;
-        background: transparent;
-        color: var(--muted);
-        padding: 8px 12px;
         border-radius: 10px;
-        font-weight: 600;
-        cursor: pointer;
+        padding: 8px 12px;
+        font-weight: 700;
+        color: var(--muted);
       }
-
-      .role-btn.active {
-        background: var(--primary-3);
+      .chip.primary {
+        background: var(--primary-soft);
         color: var(--primary);
       }
-
-      .user-badge {
+      .user-pill {
         display: flex;
         align-items: center;
         gap: 10px;
         background: var(--panel);
         border: 1px solid var(--line);
-        border-radius: 14px;
-        padding: 8px 12px;
+        border-radius: 12px;
+        padding: 8px 10px;
         box-shadow: var(--shadow);
       }
-
       .avatar {
         width: 36px;
         height: 36px;
         border-radius: 50%;
+        background: linear-gradient(135deg, #dfeeee, #a7d4bf);
         display: grid;
         place-items: center;
-        background: linear-gradient(135deg, #d8f0de, #82c7a2);
-        color: var(--primary);
         font-weight: 800;
+        color: var(--primary);
       }
+      .user-pill strong { display: block; font-size: 0.88rem; }
+      .user-pill small { color: var(--muted); font-size: 0.72rem; }
 
-      .user-label {
+      .header-block {
         display: flex;
-        flex-direction: column;
-        line-height: 1.2;
-      }
-
-      .user-label strong {
-        font-size: 0.9rem;
-      }
-
-      .user-label small {
-        color: var(--muted);
-        font-size: 0.74rem;
-      }
-
-      .page-header {
-        display: flex;
-        align-items: flex-start;
+        align-items: end;
         justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 20px;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
       }
-
-      .page-header h2 {
-        margin: 0;
-        font-size: clamp(1.7rem, 2vw, 2.2rem);
-      }
-
-      .page-header p {
-        margin: 7px 0 0;
-        color: var(--muted);
-      }
-
+      .page-title { margin: 0; font-size: clamp(1.7rem, 3vw, 2.3rem); }
+      .page-subtitle { margin: 6px 0 0; color: var(--muted); }
       .status-row {
         display: flex;
-        flex-wrap: wrap;
         gap: 8px;
+        flex-wrap: wrap;
       }
-
       .status-chip {
-        border: 1px solid var(--line);
         background: var(--panel);
-        color: var(--muted);
+        border: 1px solid var(--line);
         border-radius: 999px;
         padding: 8px 12px;
-        cursor: pointer;
-      }
-
-      .status-chip.active {
-        background: var(--primary-3);
-        border-color: rgba(29, 95, 66, 0.2);
-        color: var(--primary);
-        font-weight: 700;
-      }
-
-      .content-wrapper {
-        display: grid;
-        gap: 22px;
-      }
-
-      .section-grid {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 18px;
-      }
-
-      .card {
-        background: var(--panel);
-        border-radius: var(--radius);
-        border: 1px solid rgba(90, 108, 98, 0.08);
-        box-shadow: var(--shadow);
-      }
-
-      .stat-card {
-        padding: 18px 18px 16px;
-      }
-
-      .stat-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 16px;
-      }
-
-      .label {
-        margin: 0;
         color: var(--muted);
-        font-size: 0.8rem;
-      }
-
-      .stat-icon {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-        display: grid;
-        place-items: center;
-        font-size: 1.08rem;
-      }
-
-      .icon-green { background: #ebfaf0; color: var(--success); }
-      .icon-red { background: #fdecec; color: var(--danger); }
-      .icon-blue { background: #ebf3ff; color: var(--info); }
-      .icon-gold { background: #fff5df; color: var(--warning); }
-
-      .stat-value {
-        margin: 0;
-        font-weight: 800;
-        font-size: clamp(1.35rem, 2vw, 2rem);
-      }
-
-      .trend {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        margin-top: 8px;
-        padding: 5px 8px;
-        border-radius: 999px;
-        font-size: 0.76rem;
         font-weight: 700;
       }
-
-      .trend.up { background: #eafaf0; color: var(--success); }
-      .trend.down { background: #fdecec; color: var(--danger); }
-
-      .main-grid {
-        display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 22px;
-        margin-top: 22px;
+      .status-chip.active {
+        background: var(--primary-soft);
+        color: var(--primary);
+        border-color: rgba(29, 88, 72, 0.18);
       }
 
-      .panel {
+      .section {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
         padding: 18px;
+        margin-bottom: 18px;
       }
-
-      .panel-header {
+      .section-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 10px;
         margin-bottom: 14px;
       }
-
-      .panel-header h3 {
+      .section-header h3 {
         margin: 0;
-        font-size: 1.08rem;
+        font-size: 1.05rem;
+      }
+      .muted { color: var(--muted); }
+      .summary-box {
+        background: var(--primary-soft);
+        border-left: 4px solid var(--primary);
+        border-radius: 10px;
+        padding: 12px 14px;
+        color: var(--primary);
+        font-weight: 700;
+        margin-bottom: 18px;
       }
 
-      .meta {
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+        margin-bottom: 18px;
+      }
+      .stat-card {
+        background: linear-gradient(180deg, #fff, #f3faf7);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 16px;
+        min-height: 120px;
+      }
+      .stat-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 14px;
+      }
+      .stat-label {
         color: var(--muted);
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
       }
+      .stat-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-size: 1.05rem;
+      }
+      .icon-green { background: #eafaf0; color: var(--success); }
+      .icon-red { background: #fdecec; color: var(--danger); }
+      .icon-blue { background: #edf4ff; color: var(--info); }
+      .icon-gold { background: #fff3df; color: var(--warning); }
+      .stat-value {
+        font-size: clamp(1.4rem, 2vw, 1.9rem);
+        font-weight: 800;
+      }
+      .trend {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 10px;
+        padding: 5px 8px;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 700;
+      }
+      .trend.up { background: #eafaf0; color: var(--success); }
+      .trend.down { background: #fdecec; color: var(--danger); }
 
-      .bar-chart {
-        height: 190px;
+      .main-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+      .chart-wrap {
+        height: 220px;
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
-        gap: 10px;
-        padding-top: 10px;
+        gap: 12px;
+        padding: 8px 4px 0;
       }
-
       .bar-col {
-        flex: 1;
-        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: end;
         gap: 8px;
+        flex: 1;
+        height: 100%;
       }
-
       .bar {
         width: 100%;
-        max-width: 38px;
-        min-height: 20px;
-        border-radius: 10px 10px 0 0;
-        background: linear-gradient(180deg, #98d1a5 0%, var(--primary) 100%);
+        max-width: 42px;
+        border-radius: 12px 12px 0 0;
+        background: linear-gradient(180deg, #bfe5c9, var(--primary));
+        min-height: 32px;
       }
-
-      .bar.alt {
-        background: linear-gradient(180deg, #daf6e6 0%, #6b9d80 100%);
-      }
-
-      .bar-label {
-        color: var(--muted);
-        font-size: 0.72rem;
-      }
-
-      .mini-list {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-      }
-
+      .bar.alt { background: linear-gradient(180deg, #d8f4e3, #7fbc9d); }
+      .bar-label { color: var(--muted); font-size: 0.72rem; }
+      .mini-list { display: flex; flex-direction: column; gap: 12px; }
       .mini-item {
         display: flex;
         align-items: center;
         gap: 12px;
         padding: 10px 8px;
         border-radius: 12px;
-        background: #f9fbf9;
+        background: #f9fbfa;
       }
-
-      .mini-bullet {
+      .mini-dot {
         width: 10px;
         height: 10px;
         border-radius: 50%;
       }
+      .mini-item strong { display: block; }
+      .mini-item small { color: var(--muted); }
+      .mini-item .value { margin-left: auto; font-weight: 700; }
 
-      .mini-item strong {
-        display: block;
-        font-size: 0.92rem;
-      }
-
-      .mini-item small {
-        color: var(--muted);
-      }
-
-      .mini-item .value {
-        margin-left: auto;
-        font-weight: 700;
-      }
-
-      .two-grid {
-        display: grid;
-        grid-template-columns: 1.15fr 0.85fr;
-        gap: 22px;
-      }
-
-      .table-wrap {
-        overflow: auto;
-      }
-
+      .table-wrap { overflow-x: auto; }
       table {
         width: 100%;
-        min-width: 700px;
+        min-width: 760px;
         border-collapse: collapse;
       }
-
       th, td {
-        padding: 14px 12px;
         text-align: left;
-        vertical-align: middle;
+        padding: 12px 10px;
         border-bottom: 1px solid var(--line);
+        vertical-align: top;
       }
-
       th {
         background: #fafcfb;
         color: var(--muted);
-        font-size: 0.78rem;
-        letter-spacing: 0.05em;
+        font-size: 0.75rem;
         text-transform: uppercase;
-        font-weight: 700;
+        letter-spacing: 0.05em;
       }
-
-      tbody tr:hover {
-        background: #f9fcfa;
-      }
-
-      .status {
+      tbody tr:hover { background: #f9fbfa; }
+      .badge {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 7px 10px;
+        padding: 6px 10px;
         border-radius: 999px;
-        font-size: 0.76rem;
-        font-weight: 700;
-        white-space: nowrap;
-      }
-
-      .status.paid { background: #eafaf0; color: var(--success); }
-      .status.pending { background: #fff4df; color: var(--warning); }
-      .status.review { background: #ebf0ff; color: var(--info); }
-      .status.cancelled { background: #fdecec; color: var(--danger); }
-
-      .money {
+        font-size: 0.72rem;
         font-weight: 700;
       }
+      .badge.income { background: #eafaf0; color: var(--success); }
+      .badge.expense { background: #fdecec; color: var(--danger); }
+      .badge.transfer { background: #edf4ff; color: var(--info); }
+      .badge.status-diajukan { background: #fff4df; color: var(--warning); }
+      .badge.status-disetujui { background: #eafaf0; color: var(--success); }
+      .badge.status-perlu-revisi { background: #fff1f1; color: var(--danger); }
+      .badge.status-ditolak { background: #ffecef; color: var(--danger); }
+      .badge.status-dicairkan { background: #e7faf4; color: var(--primary); }
 
+      .money { font-weight: 700; }
       .money.in { color: var(--success); }
       .money.out { color: var(--danger); }
-
-      .action-link {
-        color: var(--primary);
-        font-weight: 600;
-        cursor: pointer;
+      .btn{
+        border: none;
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-weight: 700;
       }
-
-      .form-panel {
-        background: var(--panel);
-        border-radius: var(--radius);
-        border: 1px solid rgba(90, 108, 98, 0.08);
-        box-shadow: var(--shadow);
-        padding: 18px;
-      }
+      .btn.primary { background: var(--primary); color: white; }
+      .btn.primary:hover { background: var(--primary-2); }
+      .btn.secondary { background: var(--primary-soft); color: var(--primary); border: 1px solid var(--line); }
+      .btn.warning { background: #fff4df; color: var(--warning); border: 1px solid #efd3a0; }
+      .btn.danger { background: #fff0f0; color: var(--danger); border: 1px solid #efcaca; }
 
       .form-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 14px;
       }
-
-      .field {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
+      .field { display: flex; flex-direction: column; gap: 8px; }
+      .field.full { grid-column: 1 / -1; }
+      label {
+        display: block;
+        color: var(--primary);
+        font-size: 0.8rem;
+        font-weight: 700;
       }
-
-      .field.full {
-        grid-column: 1 / -1;
+      input, select, textarea {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: white;
+        padding: 10px 12px;
+        color: var(--text);
+        outline: none;
       }
-
+      textarea { min-height: 90px; resize: vertical; }
       .upload-box {
         text-align: center;
-        padding: 16px;
-        border: 1.5px dashed #cfe4d6;
-        background: #f7fbf8;
-        border-radius: 14px;
+        border: 1.5px dashed #d2e2d8;
+        background: #f7faf8;
+        border-radius: 10px;
+        padding: 18px 14px;
       }
-
-      .upload-box strong {
-        display: block;
-        margin-bottom: 6px;
-      }
-
-      .upload-box small {
-        color: var(--muted);
-      }
-
-      .upload-box input[type="file"] {
-        display: none;
-      }
-
       .upload-label {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        margin-top: 12px;
-        padding: 10px 14px;
-        border-radius: 12px;
         background: var(--primary);
         color: white;
-        font-weight: 600;
+        border-radius: 10px;
+        padding: 10px 14px;
+        margin-top: 12px;
         cursor: pointer;
+        font-weight: 700;
       }
-
       .file-preview {
         display: none;
         margin-top: 12px;
-        padding: 10px;
-        border-radius: 12px;
-        background: #f2f8f4;
-        border: 1px solid #dfeae3;
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: #edf8f1;
         color: var(--primary);
-        font-weight: 600;
+        font-weight: 700;
       }
-
-      .file-preview.show {
-        display: block;
+      .file-preview.show { display: block; }
+      .empty {
+        padding: 24px;
+        text-align: center;
+        color: var(--muted);
+        border: 1px dashed var(--line);
+        border-radius: 12px;
+        background: #fbfdfc;
       }
-
-      .card-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 18px;
-      }
-
+      .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
       .list-card {
-        padding: 16px;
-        border-radius: 16px;
         background: var(--panel-soft);
         border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 16px;
       }
-
       .mini-label {
+        font-size: 0.72rem;
         color: var(--muted);
-        font-size: 0.76rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
         margin-bottom: 8px;
       }
-
       .big-number {
-        font-size: 1.7rem;
+        font-size: 1.8rem;
         font-weight: 800;
       }
 
-      .footer-note {
-        margin-top: 24px;
-        color: var(--muted);
-        font-size: 0.8rem;
-      }
-
-      @media (max-width: 1100px) {
-        .section-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .main-grid,
-        .two-grid,
-        .card-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      @media (max-width: 840px) {
-        .app-shell {
-          grid-template-columns: 1fr;
-        }
-
+      @media (max-width: 900px) {
+        .app-shell { grid-template-columns: 1fr; }
         .sidebar {
-          position: fixed;
-          left: -100%;
+          position: sticky;
           top: 0;
-          width: 82%;
-          max-width: 300px;
-          z-index: 100;
-          box-shadow: 12px 0 40px rgba(0, 0, 0, 0.12);
-          transition: left 0.25s ease;
+          height: auto;
+          z-index: 10;
         }
-
-        .sidebar.open {
-          left: 0;
-        }
-
-        .mobile-toggle {
-          display: inline-grid;
-          place-items: center;
-        }
-
-        .topbar {
-          flex-wrap: wrap;
-        }
-
-        .topbar-left {
-          width: 100%;
-        }
-
-        .search-box {
-          width: 100%;
-        }
-
-        .topbar-right {
-          width: 100%;
-          justify-content: space-between;
-        }
-
-        .page-header {
-          flex-direction: column;
-          align-items: flex-start;
-        }
+        .main { padding: 18px 16px 28px; }
+        .main-grid, .grid-2 { grid-template-columns: 1fr; }
       }
 
       @media (max-width: 560px) {
-        .main {
-          padding: 18px 16px 24px;
-        }
-
-        .section-grid,
-        .form-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .user-badge {
-          display: none;
-        }
+        .form-grid { grid-template-columns: 1fr; }
+        .right-tools { width: 100%; justify-content: space-between; }
+        .user-pill { display: none; }
       }
     </style>
   </head>
   <body>
-    <div id="appPage" class="page active">
-      <div class="app-shell">
-        <aside class="sidebar" id="sidebar">
-          <div class="brand">
-            <div class="brand-badge">K</div>
-            <div>
-              <h1>KasPanitia</h1>
-              <small>Finance System</small>
-            </div>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-badge">K</div>
+          <div>
+            <div class="brand-title">KasPanitia</div>
+            <div class="brand-sub">Finance Portal</div>
+          </div>
+        </div>
+
+        <div class="user-box">
+          <span class="label-mini">Pengguna</span>
+          <select id="userSelect" class="user-select"></select>
+        </div>
+
+        <nav id="nav" class="nav"></nav>
+      </aside>
+
+      <main class="main">
+        <div class="topbar">
+          <div class="search-box">
+            <span>🔎</span>
+            <input id="globalSearch" type="text" placeholder="Cari transaksi, pengajuan, atau bukti..." />
           </div>
 
-          <div id="navContainer"></div>
-        </aside>
-
-        <main class="main">
-          <div class="topbar">
-            <div class="topbar-left">
-              <button class="mobile-toggle" id="mobileToggle" aria-label="Buka menu">☰</button>
-              <div class="search-box">
-                <span>🔎</span>
-                <input type="text" placeholder="Cari transaksi, pengajuan, atau bukti..." />
-              </div>
-            </div>
-
-            <div class="topbar-right">
-              <div class="role-switch" id="roleSwitch"></div>
-              <button class="btn soft" type="button">🔔 Notifikasi</button>
-              <button class="btn primary" id="quickAction" type="button">+ Buat Transaksi</button>
-
-              <div class="user-badge">
-                <div class="avatar" id="avatarInitial">B</div>
-                <div class="user-label">
-                  <strong id="userRoleDisplay">Bendahara</strong>
-                  <small id="userNameDisplay">Rina A.</small>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="page-header">
-            <div>
-              <h2 id="pageTitle">Dashboard Bendahara</h2>
-              <p id="pageSubtitle">Monitoring keuangan dan realisasi anggaran</p>
-            </div>
-
-            <div class="status-row">
-              <button class="status-chip active" type="button">Hari Ini</button>
-              <button class="status-chip" type="button">Minggu Ini</button>
-              <button class="status-chip" type="button">Bulan Ini</button>
-              <button class="status-chip" type="button">Kustom</button>
-            </div>
-          </div>
-
-          <div class="content-wrapper">
-            <div id="dashboardSection">
-              <div class="section-grid" id="statsGrid"></div>
-
-              <div class="main-grid">
-                <div class="card panel">
-                  <div class="panel-header">
-                    <h3 id="chartTitle">Realisasi Anggaran</h3>
-                    <span class="meta" id="chartMeta">Oktober 2026</span>
-                  </div>
-
-                  <div class="bar-chart">
-                    <div class="bar-col"><div class="bar" style="height: 58%;"></div><div class="bar-label">Jan</div></div>
-                    <div class="bar-col"><div class="bar alt" style="height: 62%;"></div><div class="bar-label">Feb</div></div>
-                    <div class="bar-col"><div class="bar" style="height: 70%;"></div><div class="bar-label">Mar</div></div>
-                    <div class="bar-col"><div class="bar alt" style="height: 75%;"></div><div class="bar-label">Apr</div></div>
-                    <div class="bar-col"><div class="bar" style="height: 68%;"></div><div class="bar-label">Mei</div></div>
-                    <div class="bar-col"><div class="bar alt" style="height: 82%;"></div><div class="bar-label">Jun</div></div>
-                    <div class="bar-col"><div class="bar" style="height: 90%;"></div><div class="bar-label">Jul</div></div>
-                  </div>
-                </div>
-
-                <div class="card panel">
-                  <div class="panel-header">
-                    <h3 id="summaryTitle">Ringkasan</h3>
-                    <span class="meta" id="summaryMeta">RAB aktif</span>
-                  </div>
-                  <div class="mini-list" id="summaryList"></div>
-                </div>
-              </div>
-            </div>
-
-            <div id="transactionsSection" class="hidden">
-              <div class="two-grid">
-                <div class="card panel">
-                  <div class="panel-header">
-                    <h3 id="tableTitle">Transaksi Terbaru</h3>
-                    <span class="meta" id="tableMeta">10 catatan terakhir</span>
-                  </div>
-
-                  <div class="table-wrap">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Transaksi</th>
-                          <th>Kategori</th>
-                          <th>Divisi</th>
-                          <th>Nilai</th>
-                          <th>Status</th>
-                          <th>Aksi</th>
-                        </tr>
-                      </thead>
-                      <tbody id="transactionTableBody"></tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div class="form-panel">
-                  <div class="panel-header">
-                    <h3 id="formTitle">Catat Transaksi</h3>
-                    <span class="meta" id="formMeta">Form transaksi</span>
-                  </div>
-
-                  <form>
-                    <div class="form-grid">
-                      <div class="field">
-                        <label for="jenis">Jenis</label>
-                        <select id="jenis">
-                          <option>Pemasukan</option>
-                          <option>Pengeluaran</option>
-                          <option>Transfer Internal</option>
-                        </select>
-                      </div>
-
-                      <div class="field">
-                        <label for="akun">Akun</label>
-                        <select id="akun">
-                          <option>Kas Tunai</option>
-                          <option>Bank BNI</option>
-                          <option>Bank Mandiri</option>
-                        </select>
-                      </div>
-
-                      <div class="field">
-                        <label for="divisi">Divisi</label>
-                        <select id="divisi">
-                          <option>Acara</option>
-                          <option>Publikasi</option>
-                          <option>Logistik</option>
-                          <option>Umum</option>
-                        </select>
-                      </div>
-
-                      <div class="field">
-                        <label for="nominal">Nominal</label>
-                        <input id="nominal" type="text" value="Rp 2.500.000" />
-                      </div>
-
-                      <div class="field full">
-                        <label for="keterangan">Keterangan</label>
-                        <textarea id="keterangan" placeholder="Masukkan keterangan transaksi..."></textarea>
-                      </div>
-
-                      <div class="field full">
-                        <label>Bukti Transaksi</label>
-                        <div class="upload-box">
-                          <strong>Unggah bukti pembayaran</strong>
-                          <small>Format didukung: JPG, PNG, WEBP</small>
-                          <label class="upload-label" for="fileUpload">Pilih File</label>
-                          <input type="file" id="fileUpload" accept=".jpg,.jpeg,.png,.webp" />
-                          <div id="fileName" class="file-preview">Belum ada file dipilih</div>
-                        </div>
-                      </div>
-
-                      <div class="field full">
-                        <button class="btn primary" type="button" style="width:100%;">Simpan Transaksi</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-
-            <div id="fundingSection" class="hidden">
-              <div class="card panel">
-                <div class="panel-header">
-                  <h3>Pengajuan Dana</h3>
-                  <span class="meta">Status semua pengajuan</span>
-                </div>
-
-                <div class="card-grid">
-                  <div class="list-card">
-                    <div class="mini-label">Pengajuan Baru</div>
-                    <div class="big-number">12</div>
-                  </div>
-                  <div class="list-card">
-                    <div class="mini-label">Diterima</div>
-                    <div class="big-number">8</div>
-                  </div>
-                  <div class="list-card">
-                    <div class="mini-label">Diproses</div>
-                    <div class="big-number">3</div>
-                  </div>
-                  <div class="list-card">
-                    <div class="mini-label">Ditolak</div>
-                    <div class="big-number">1</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div id="reportSection" class="hidden">
-              <div class="card panel">
-                <div class="panel-header">
-                  <h3>Laporan Keuangan</h3>
-                  <span class="meta">PDF / Excel</span>
-                </div>
-
-                <div class="card-grid">
-                  <div class="list-card">
-                    <div class="mini-label">Pemasukan</div>
-                    <div class="big-number">Rp 48.500.000</div>
-                  </div>
-                  <div class="list-card">
-                    <div class="mini-label">Pengeluaran</div>
-                    <div class="big-number">Rp 31.200.000</div>
-                  </div>
-                  <div class="list-card">
-                    <div class="mini-label">Saldo Kas</div>
-                    <div class="big-number">Rp 12.800.000</div>
-                  </div>
-                  <div class="list-card">
-                    <div class="mini-label">Saldo Bank</div>
-                    <div class="big-number">Rp 26.300.000</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div id="profileSection" class="hidden">
-              <div class="card panel">
-                <div class="panel-header">
-                  <h3>Profil</h3>
-                  <span class="meta">Informasi akun</span>
-                </div>
-
-                <div class="card-grid">
-                  <div class="list-card">
-                    <div class="mini-label">Nama</div>
-                    <div class="big-number">Rina A.</div>
-                  </div>
-                  <div class="list-card">
-                    <div class="mini-label">Role</div>
-                    <div class="big-number">Bendahara</div>
-                  </div>
-                  <div class="list-card">
-                    <div class="mini-label">Email</div>
-                    <div class="big-number">bendahara@kaspanitia.local</div>
-                  </div>
-                  <div class="list-card">
-                    <div class="mini-label">Status</div>
-                    <div class="big-number">Aktif</div>
-                  </div>
-                </div>
+          <div class="right-tools">
+            <div class="chip primary">Live Data</div>
+            <div class="chip">Notifikasi</div>
+            <button class="btn primary" id="quickAction" type="button">+ Buat Transaksi</button>
+            <div class="user-pill">
+              <div class="avatar" id="userAvatar">B</div>
+              <div>
+                <strong id="userRoleTop">Bendahara</strong>
+                <small id="userNameTop">Budi</small>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="footer-note">
-            KasPanitia • Sistem Keuangan Kepanitiaan
+        <div class="header-block">
+          <div>
+            <h1 id="pageTitle" class="page-title">Dashboard</h1>
+            <p id="pageSubtitle" class="page-subtitle">Monitoring keuangan dan realisasi anggaran</p>
           </div>
-        </main>
-      </div>
+          <div class="status-row">
+            <button class="status-chip active" type="button">Hari Ini</button>
+            <button class="status-chip" type="button">Minggu Ini</button>
+            <button class="status-chip" type="button">Bulan Ini</button>
+            <button class="status-chip" type="button">Kustom</button>
+          </div>
+        </div>
+
+        <div id="screen-dashboard" class="screen"></div>
+        <div id="screen-rab" class="screen hidden"></div>
+        <div id="screen-pengajuan" class="screen hidden"></div>
+        <div id="screen-transaksi" class="screen hidden"></div>
+        <div id="screen-laporan" class="screen hidden"></div>
+        <div id="screen-audit" class="screen hidden"></div>
+        <div id="screen-users" class="screen hidden"></div>
+      </main>
     </div>
 
     <script>
-      const roles = {
-        admin: {
-          label: "Admin",
-          pageTitle: "Dashboard Admin",
-          subtitle: "Manajemen organisasi, pengguna, dan konfigurasi sistem",
-          user: { name: "Siti Admin", initial: "A" },
-          quickAction: "+ Tambah User",
-          nav: [
-            { label: "Dashboard", icon: "🏠", active: true, section: "dashboard" },
-            { label: "Pengguna", icon: "👥", section: "dashboard" },
-            { label: "Role", icon: "🛡️", section: "dashboard" },
-            { label: "Transaksi", icon: "💸", section: "transactions" },
-            { label: "Pengajuan", icon: "📄", section: "funding" },
-            { label: "Laporan", icon: "📚", section: "report" },
-            { label: "Profil", icon: "👤", section: "profile" }
-          ],
-          stats: [
-            { label: "Total User", value: "128", icon: "icon-blue", trend: "▲ 10.5% bulan lalu", trendType: "up" },
-            { label: "Jumlah Role", value: "4", icon: "icon-green", trend: "▲ 1 role baru", trendType: "up" },
-            { label: "Divisi Aktif", value: "18", icon: "icon-gold", trend: "▲ 3 divisi", trendType: "up" },
-            { label: "Sistem", value: "Normal", icon: "icon-red", trend: "● Online", trendType: "up" }
-          ],
-          summary: [
-            { label: "Kepanitiaan", value: "12", extra: "aktif", color: "#1d5f42" },
-            { label: "Pengguna Aktif", value: "96%", extra: "dari total", color: "#68b487" },
-            { label: "Role Belum Aktif", value: "0", extra: "tersedia", color: "#d88a14" },
-            { label: "Akun Nonaktif", value: "12", extra: "perlu review", color: "#2d6ec8" }
-          ],
-          chartTitle: "Aktivitas Sistem",
-          chartMeta: "Triwulan Oktober",
-          summaryTitle: "Statistik Organisasi",
-          summaryMeta: "Data master",
-          tableTitle: "Log Aktivitas Terbaru",
-          tableMeta: "8 aktivitas terakhir",
-          formTitle: "Tambah Pengguna",
-          formMeta: "Form manajemen akun"
-        },
-
-        koordinator: {
-          label: "Koordinator Divisi",
-          pageTitle: "Dashboard Koordinator",
-          subtitle: "Ringkasan kebutuhan divisi dan status pengajuan",
-          user: { name: "Dewi K.", initial: "K" },
-          quickAction: "+ Ajukan Dana",
-          nav: [
-            { label: "Dashboard", icon: "🏠", active: true, section: "dashboard" },
-            { label: "Pengajuan", icon: "📄", section: "funding" },
-            { label: "Riwayat", icon: "🧾", section: "funding" },
-            { label: "Laporan", icon: "📚", section: "report" },
-            { label: "Profil", icon: "👤", section: "profile" }
-          ],
-          stats: [
-            { label: "Total Pengajuan", value: "12", icon: "icon-blue", trend: "▲ 2 baru", trendType: "up" },
-            { label: "Anggaran Divisi", value: "Rp 18.000.000", icon: "icon-green", trend: "▲ 8.4%", trendType: "up" },
-            { label: "Sudah Diproses", value: "9", icon: "icon-gold", trend: "▲ 3 item", trendType: "up" },
-            { label: "Belum Selesai", value: "3", icon: "icon-red", trend: "▼ 1 item", trendType: "down" }
-          ],
-          summary: [
-            { label: "RAB Divisi", value: "Rp 18.000.000", extra: "total anggaran", color: "#1d5f42" },
-            { label: "Realisasi", value: "Rp 11.500.000", extra: "tercatat", color: "#68b487" },
-            { label: "Sisa Dana", value: "Rp 6.500.000", extra: "tersedia", color: "#d88a14" },
-            { label: "Pengajuan Aktif", value: "3", extra: "belum ditutup", color: "#2d6ec8" }
-          ],
-          chartTitle: "Pemakaian Divisi",
-          chartMeta: "Januari – Juli",
-          summaryTitle: "Status Divisi",
-          summaryMeta: "Per divisi",
-          tableTitle: "Pengajuan Terbaru",
-          tableMeta: "5 item terakhir",
-          formTitle: "Buat Pengajuan Dana",
-          formMeta: "Koordinator divisi"
-        },
-
-        bendahara: {
-          label: "Bendahara",
-          pageTitle: "Dashboard Bendahara",
-          subtitle: "Monitoring keuangan kepanitiaan",
-          user: { name: "Rina A.", initial: "B" },
-          quickAction: "+ Buat Transaksi",
-          nav: [
-            { label: "Dashboard", icon: "🏠", active: true, section: "dashboard" },
-            { label: "Transaksi", icon: "💸", section: "transactions" },
-            { label: "Pengajuan", icon: "📄", section: "funding" },
-            { label: "Bukti", icon: "🧾", section: "transactions" },
-            { label: "Laporan", icon: "📚", section: "report" },
-            { label: "Profil", icon: "👤", section: "profile" }
-          ],
-          stats: [
-            { label: "Pemasukan", value: "Rp 48.500.000", icon: "icon-green", trend: "▲ 12.4% bulan lalu", trendType: "up" },
-            { label: "Pengeluaran", value: "Rp 31.200.000", icon: "icon-red", trend: "▼ 3.1% bulan lalu", trendType: "down" },
-            { label: "Saldo Kas", value: "Rp 12.800.000", icon: "icon-blue", trend: "▲ 8.9% saldo awal", trendType: "up" },
-            { label: "Saldo Bank", value: "Rp 26.300.000", icon: "icon-gold", trend: "▲ 5.2% akhir minggu", trendType: "up" }
-          ],
-          summary: [
-            { label: "RAB Total", value: "Rp 90.000.000", extra: "seluruh divisi", color: "#1d5f42" },
-            { label: "Realisasi", value: "Rp 61.500.000", extra: "tercatat", color: "#68b487" },
-            { label: "Sisa Anggaran", value: "Rp 28.500.000", extra: "belum terpakai", color: "#d88a14" },
-            { label: "Pengajuan Aktif", value: "7", extra: "belum ditutup", color: "#2d6ec8" }
-          ],
-          chartTitle: "Realisasi Anggaran",
-          chartMeta: "Oktober 2026",
-          summaryTitle: "Ringkasan Anggaran",
-          summaryMeta: "RAB aktif",
-          tableTitle: "Transaksi Terbaru",
-          tableMeta: "10 catatan terakhir",
-          formTitle: "Catat Transaksi",
-          formMeta: "Form transaksi"
-        },
-
-        ketua: {
-          label: "Ketua Panitia",
-          pageTitle: "Dashboard Ketua",
-          subtitle: "Pantauan kondisi keuangan dan evaluasi laporan",
-          user: { name: "Nanda K.", initial: "K" },
-          quickAction: "+ Lihat Laporan",
-          nav: [
-            { label: "Dashboard", icon: "🏠", active: true, section: "dashboard" },
-            { label: "Transaksi", icon: "💸", section: "transactions" },
-            { label: "Bukti", icon: "🧾", section: "transactions" },
-            { label: "Laporan", icon: "📚", section: "report" },
-            { label: "Profil", icon: "👤", section: "profile" }
-          ],
-          stats: [
-            { label: "Kas Tunai", value: "Rp 12.800.000", icon: "icon-green", trend: "▲ stabil", trendType: "up" },
-            { label: "Bank", value: "Rp 26.300.000", icon: "icon-blue", trend: "▲ konsisten", trendType: "up" },
-            { label: "Pemasukan", value: "Rp 48.500.000", icon: "icon-gold", trend: "▲ 12.4%", trendType: "up" },
-            { label: "Pengeluaran", value: "Rp 31.200.000", icon: "icon-red", trend: "▼ 3.1%", trendType: "down" }
-          ],
-          summary: [
-            { label: "Saldo Total", value: "Rp 39.100.000", extra: "kas + bank", color: "#1d5f42" },
-            { label: "Realisasi RAB", value: "68%", extra: "dari target", color: "#68b487" },
-            { label: "Tren Transaksi", value: "Naik", extra: "bulan ini", color: "#d88a14" },
-            { label: "Laporan Siap", value: "4", extra: "dokumen", color: "#2d6ec8" }
-          ],
-          chartTitle: "Tren Keuangan",
-          chartMeta: "Juni – Oktober",
-          summaryTitle: "Ringkasan Keuangan",
-          summaryMeta: "Pemantauan ketua",
-          tableTitle: "Transaksi Terakhir",
-          tableMeta: "7 item terakhir",
-          formTitle: "Lihat Laporan",
-          formMeta: "Monitoring"
-        }
+      const STORAGE_KEY = "kaspanitia-live-v1";
+      const defaultState = {
+        currentUserId: "u-bendahara",
+        users: [
+          { id: "u-admin", name: "Admin Sistem", email: "admin@kaspanitia.id", role: "Admin", divisi: "-" },
+          { id: "u-ketua", name: "Rina Ketua", email: "ketua@kaspanitia.id", role: "Ketua Panitia", divisi: "-" },
+          { id: "u-bendahara", name: "Budi Bendahara", email: "bendahara@kaspanitia.id", role: "Bendahara", divisi: "-" },
+          { id: "u-divisi-acara", name: "Ayu Acara", email: "acara@kaspanitia.id", role: "Koordinator Divisi", divisi: "Acara" },
+          { id: "u-divisi-humas", name: "Dian Humas", email: "humas@kaspanitia.id", role: "Koordinator Divisi", divisi: "Humas" }
+        ],
+        accounts: [
+          { id: "acc-cash", name: "Kas Tunai", type: "Kas Tunai", saldoAwal: 1500000 },
+          { id: "acc-bank", name: "Rekening Bank", type: "Rekening Bank", saldoAwal: 8000000 }
+        ],
+        divisions: [
+          { id: "div-acara", name: "Acara", coordinator: "Ayu Acara" },
+          { id: "div-humas", name: "Humas", coordinator: "Dian Humas" },
+          { id: "div-logistik", name: "Logistik", coordinator: "Budi Bendahara" }
+        ],
+        rab: [
+          { id: "rab-1", division: "Acara", category: "Sewa Venue", amount: 4000000, notes: "Auditorium utama" },
+          { id: "rab-2", division: "Acara", category: "Honor MC", amount: 1500000, notes: "Pembawa acara" },
+          { id: "rab-3", division: "Humas", category: "Promosi & Media", amount: 2200000, notes: "Poster, iklan, desain" },
+          { id: "rab-4", division: "Logistik", category: "Perlengkapan", amount: 3200000, notes: "Dekorasi, meja, kursi" }
+        ],
+        submissions: [
+          { id: "sub-1", requestorId: "u-divisi-acara", division: "Acara", title: "Pembelian konsumsi undangan", category: "Konsumsi", nominal: 2500000, date: "2026-10-23", status: "Diajukan", notes: "Untuk konsumsi peserta dan panitia", attachment: "lampiran-1.pdf" },
+          { id: "sub-2", requestorId: "u-divisi-humas", division: "Humas", title: "Cetak banner event", category: "Promosi", nominal: 1200000, date: "2026-10-21", status: "Disetujui", notes: "Banner untuk pengumuman di kampus", attachment: "lampiran-2.pdf" }
+        ],
+        transactions: [
+          { id: "tx-1", date: "2026-10-10", description: "Pendaftaran sponsor", type: "Pemasukan", category: "Sponsor", accountId: "acc-bank", division: "Acara", nominal: 6000000, status: "Diposting" },
+          { id: "tx-2", date: "2026-10-12", description: "Pembelian dekorasi", type: "Pengeluaran", category: "Logistik", accountId: "acc-cash", division: "Logistik", nominal: 1200000, status: "Diposting" },
+          { id: "tx-3", date: "2026-10-15", description: "Transfer ke kas acara", type: "Transfer", category: "Internal", accountId: "acc-bank", fromAccountId: "acc-bank", toAccountId: "acc-cash", division: "Acara", nominal: 1500000, status: "Diposting" }
+        ],
+        auditLog: [
+          { id: "log-1", time: "2026-10-10 09:15", actor: "Budi Bendahara", action: "Posting transaksi", detail: "Pendaftaran sponsor masuk ke rekening bank" },
+          { id: "log-2", time: "2026-10-12 14:00", actor: "Ayu Acara", action: "Pengajuan dana", detail: "Pengajuan konsumsi undangan dibuat" },
+          { id: "log-3", time: "2026-10-15 11:20", actor: "Budi Bendahara", action: "Transfer internal", detail: "Transfer dari rekening bank ke kas tunai" }
+        ]
       };
 
-      let activeRole = "bendahara";
-      let activeSection = "dashboard";
-      let selectedRole = "bendahara";
+      let activeScreen = "dashboard";
+      let state = loadState();
 
-      function syncLoginRoleSelection(role) {
-        selectedRole = role;
-        document.querySelectorAll(".chip-role").forEach((btn) => {
-          btn.classList.toggle("active", btn.dataset.role === role);
-        });
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultState));
+            return structuredClone(defaultState);
+          }
+          const parsed = JSON.parse(raw);
+          if (!parsed || !parsed.users) throw new Error("invalid");
+          return parsed;
+        } catch {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultState));
+          return structuredClone(defaultState);
+        }
       }
 
-      function formatRupiah(value) {
-        const raw = String(value).replace(/[^\d]/g, "");
-        const num = Number(raw || 0);
+      function saveState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      function parseNumber(v) {
+        const n = Number(v);
+        return Number.isFinite(n) ? n : 0;
+      }
+
+      function formatCurrency(value) {
         return new Intl.NumberFormat("id-ID", {
           style: "currency",
           currency: "IDR",
-          minimumFractionDigits: 0,
           maximumFractionDigits: 0
-        }).format(num);
+        }).format(parseNumber(value));
       }
 
-      function setSection(section) {
-        activeSection = section;
+      function formatDate(dateString) {
+        if (!dateString) return "-";
+        const d = new Date(dateString + "T00:00:00");
+        if (Number.isNaN(d.getTime())) return dateString;
+        return d.toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" });
+      }
 
-        const sections = ["dashboard", "transactions", "funding", "report", "profile"];
-        sections.forEach(name => {
-          const el = document.getElementById(name + "Section");
-          if (el) {
-            el.classList.toggle("hidden", name !== section);
-          }
+      function getCurrentUser() {
+        return state.users.find(u => u.id === state.currentUserId) || state.users[0];
+      }
+
+      function getUserById(id) {
+        return state.users.find(u => u.id === id);
+      }
+
+      function getAccountById(id) {
+        return state.accounts.find(a => a.id === id);
+      }
+
+      function canAccess(key) {
+        const role = getCurrentUser().role;
+        const map = {
+          dashboard: ["Admin", "Ketua Panitia", "Koordinator Divisi", "Bendahara"],
+          rab: ["Bendahara", "Ketua Panitia"],
+          pengajuan: ["Koordinator Divisi", "Bendahara", "Ketua Panitia"],
+          transaksi: ["Bendahara"],
+          laporan: ["Bendahara", "Ketua Panitia", "Admin"],
+          audit: ["Admin", "Bendahara", "Ketua Panitia"],
+          users: ["Admin"]
+        };
+        return (map[key] || []).includes(role);
+      }
+
+      function recordAudit(action, detail) {
+        state.auditLog.unshift({
+          id: "log-" + Date.now(),
+          time: new Date().toLocaleString("sv-SE").replace(" ", " "),
+          actor: getCurrentUser().name,
+          action,
+          detail
         });
+        saveState();
       }
 
-      function renderRoleButtons() {
-        const roleSwitch = document.getElementById("roleSwitch");
-        if (!roleSwitch) return;
+      function getAccountBalance(accountId) {
+        const account = getAccountById(accountId);
+        if (!account) return 0;
+        let total = parseNumber(account.saldoAwal);
 
-        roleSwitch.innerHTML = "";
+        state.transactions.forEach(tx => {
+          if (tx.accountId === accountId && tx.type === "Pemasukan") total += parseNumber(tx.nominal);
+          if (tx.accountId === accountId && tx.type === "Pengeluaran") total -= parseNumber(tx.nominal);
+          if (tx.fromAccountId === accountId && tx.type === "Transfer") total -= parseNumber(tx.nominal);
+          if (tx.toAccountId === accountId && tx.type === "Transfer") total += parseNumber(tx.nominal);
+        });
 
-        Object.entries(roles).forEach(([key, data]) => {
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "role-btn" + (key === activeRole ? " active" : "");
-          btn.dataset.role = key;
-          btn.textContent = data.label;
+        return total;
+      }
 
-          btn.addEventListener("click", () => {
-            activeRole = key;
-            selectedRole = key;
-            syncLoginRoleSelection(key);
-            activeSection = "dashboard";
-            renderPage();
+      function totalPemasukan() {
+        return state.transactions
+          .filter(tx => tx.type === "Pemasukan")
+          .reduce((sum, tx) => sum + parseNumber(tx.nominal), 0);
+      }
+
+      function totalPengeluaran() {
+        return state.transactions
+          .filter(tx => tx.type === "Pengeluaran")
+          .reduce((sum, tx) => sum + parseNumber(tx.nominal), 0);
+      }
+
+      function totalAnggaran() {
+        return state.rab.reduce((sum, item) => sum + parseNumber(item.amount), 0);
+      }
+
+      function totalMenungguPersetujuan() {
+        return state.submissions.filter(s => ["Diajukan", "Perlu Revisi"].includes(s.status)).length;
+      }
+
+      function statusBadgeClass(status) {
+        const normalized = String(status || "").trim().toLowerCase().replace(/\s+/g, "-");
+        return "badge status-" + normalized;
+      }
+
+      function setCurrentUser(userId) {
+        if (!state.users.some(u => u.id === userId)) return;
+        state.currentUserId = userId;
+        saveState();
+        render();
+      }
+
+      function updateHeaderMeta() {
+        const curr = getCurrentUser();
+        document.getElementById("userRoleTop").textContent = curr.role;
+        document.getElementById("userNameTop").textContent = curr.name;
+        document.getElementById("userAvatar").textContent = curr.name.charAt(0).toUpperCase();
+        document.title = `KasPanitia • ${curr.name} (${curr.role})`;
+      }
+
+      function renderNav() {
+        const tabs = [
+          { key: "dashboard", label: "Dashboard" },
+          { key: "rab", label: "RAB" },
+          { key: "pengajuan", label: "Pengajuan" },
+          { key: "transaksi", label: "Transaksi" },
+          { key: "laporan", label: "Laporan" },
+          { key: "audit", label: "Audit Log" },
+          { key: "users", label: "Pengguna" }
+        ];
+
+        const visible = tabs.filter(tab => canAccess(tab.key));
+        document.getElementById("nav").innerHTML = visible.map(tab => `
+          <button class="nav-btn ${activeScreen === tab.key ? "active" : ""}" data-nav="${tab.key}">${tab.label}</button>
+        `).join("");
+
+        document.querySelectorAll("[data-nav]").forEach(button => {
+          button.addEventListener("click", () => {
+            activeScreen = button.dataset.nav;
+            render();
           });
-
-          roleSwitch.appendChild(btn);
         });
+
+        const userSelect = document.getElementById("userSelect");
+        userSelect.innerHTML = state.users.map(user => `
+          <option value="${user.id}" ${user.id === state.currentUserId ? "selected" : ""}>${user.name} (${user.role})</option>
+        `).join("");
+        userSelect.onchange = (e) => setCurrentUser(e.target.value);
       }
 
-      function renderNavMenu() {
-        const navContainer = document.getElementById("navContainer");
-        if (!navContainer) return;
+      function renderScreenVisibility() {
+        const screens = ["dashboard", "rab", "pengajuan", "transaksi", "laporan", "audit", "users"];
+        screens.forEach(key => {
+          const el = document.getElementById("screen-" + key);
+          if (!el) return;
+          const visible = key === activeScreen && canAccess(key);
+          el.classList.toggle("hidden", !visible);
+        });
+        if (!canAccess(activeScreen)) activeScreen = "dashboard";
+      }
 
-        const role = roles[activeRole];
-        navContainer.innerHTML = `
-          <div class="nav-group">
-            <div class="nav-title">Menu</div>
-            ${role.nav.map(item => `
-              <button class="nav-item ${item.section === activeSection ? "active" : ""}" type="button" data-section="${item.section}">
-                <span class="nav-icon">${item.icon}</span>
-                ${item.label}
-              </button>
-            `).join("")}
-          </div>
+      function renderDashboard() {
+        if (!canAccess("dashboard")) return;
+        const cashBal = getAccountBalance("acc-cash");
+        const bankBal = getAccountBalance("acc-bank");
+        const incoming = totalPemasukan();
+        const outgoing = totalPengeluaran();
+        const totalRAB = totalAnggaran();
+        const pending = totalMenungguPersetujuan();
 
-          <div class="nav-group">
-            <div class="nav-title">Akun</div>
-            <button class="nav-item" type="button" data-section="profile"><span class="nav-icon">👤</span> Profil</button>
-            <button class="nav-item" type="button" data-section="dashboard"><span class="nav-icon">⚙️</span> Pengaturan</button>
+        document.getElementById("pageTitle").textContent = "Dashboard";
+        document.getElementById("pageSubtitle").textContent = "Monitoring keuangan dan realisasi anggaran";
+
+        document.getElementById("screen-dashboard").innerHTML = `
+          <div class="section">
+            <div class="summary-box">Selamat datang, ${getCurrentUser().name}. Periode saat ini: ${new Date().toLocaleDateString("id-ID", { month: "long", year: "numeric" })}</div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-head">
+                  <span class="stat-label">Pemasukan</span>
+                  <span class="stat-icon icon-green">↗</span>
+                </div>
+                <div class="stat-value">${formatCurrency(incoming)}</div>
+                <div class="trend up">▲ 12.4%</div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-head">
+                  <span class="stat-label">Pengeluaran</span>
+                  <span class="stat-icon icon-red">↘</span>
+                </div>
+                <div class="stat-value">${formatCurrency(outgoing)}</div>
+                <div class="trend down">▼ 6.1%</div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-head">
+                  <span class="stat-label">Kas Tunai</span>
+                  <span class="stat-icon icon-blue">💵</span>
+                </div>
+                <div class="stat-value">${formatCurrency(cashBal)}</div>
+                <div class="trend up">▲ 18.9%</div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-head">
+                  <span class="stat-label">Rekening Bank</span>
+                  <span class="stat-icon icon-gold">🏦</span>
+                </div>
+                <div class="stat-value">${formatCurrency(bankBal)}</div>
+                <div class="trend up">▲ 8.2%</div>
+              </div>
+            </div>
+
+            <div class="main-grid">
+              <div class="section" style="padding:18px; margin:0;">
+                <div class="section-header">
+                  <h3>Realisasi Anggaran</h3>
+                  <span class="muted">Oktober 2026</span>
+                </div>
+                <div class="chart-wrap">
+                  <div class="bar-col"><div class="bar" style="height:80%"></div><div class="bar-label">Jan</div></div>
+                  <div class="bar-col"><div class="bar alt" style="height:65%"></div><div class="bar-label">Feb</div></div>
+                  <div class="bar-col"><div class="bar" style="height:88%"></div><div class="bar-label">Mar</div></div>
+                  <div class="bar-col"><div class="bar alt" style="height:73%"></div><div class="bar-label">Apr</div></div>
+                  <div class="bar-col"><div class="bar" style="height:92%"></div><div class="bar-label">Mei</div></div>
+                  <div class="bar-col"><div class="bar alt" style="height:78%"></div><div class="bar-label">Jun</div></div>
+                  <div class="bar-col"><div class="bar" style="height:96%"></div><div class="bar-label">Jul</div></div>
+                </div>
+              </div>
+
+              <div class="section" style="padding:18px; margin:0;">
+                <div class="section-header">
+                  <h3>Ringkasan</h3>
+                  <span class="muted">RAB aktif</span>
+                </div>
+                <div class="mini-list">
+                  <div class="mini-item">
+                    <span class="mini-dot" style="background:#1d5848"></span>
+                    <div>
+                      <strong>Total Anggaran</strong>
+                      <small>Keseluruhan divisi</small>
+                    </div>
+                    <span class="value">${formatCurrency(totalRAB)}</span>
+                  </div>
+                  <div class="mini-item">
+                    <span class="mini-dot" style="background:#2d6ec8"></span>
+                    <div>
+                      <strong>Menunggu</strong>
+                      <small>Pengajuan masuk</small>
+                    </div>
+                    <span class="value">${pending}</span>
+                  </div>
+                  <div class="mini-item">
+                    <span class="mini-dot" style="background:#b97b1d"></span>
+                    <div>
+                      <strong>Saldo net</strong>
+                      <small>Pemasukan - pengeluaran</small>
+                    </div>
+                    <span class="value">${formatCurrency(incoming - outgoing)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section" style="padding:18px; margin:0;">
+              <div class="section-header">
+                <h3>Transaksi Terbaru</h3>
+                <span class="muted">10 item terakhir</span>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Transaksi</th>
+                      <th>Kategori</th>
+                      <th>Divisi</th>
+                      <th>Nilai</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${state.transactions.slice(0, 5).map(tx => `
+                      <tr>
+                        <td>${tx.description}</td>
+                        <td>${tx.category}</td>
+                        <td>${tx.division || "-"}</td>
+                        <td class="money ${tx.type === "Pemasukan" ? "in" : "out"}">${tx.type === "Pemasukan" ? "+" : "-"}${formatCurrency(tx.nominal)}</td>
+                        <td><span class="badge ${tx.type === "Pemasukan" ? "income" : tx.type === "Pengeluaran" ? "expense" : "transfer"}">${tx.type}</span></td>
+                      </tr>
+                    `).join("") || `<tr><td colspan="5"><div class="empty">Belum ada transaksi.</div></td></tr>`}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         `;
 
-        navContainer.querySelectorAll(".nav-item").forEach(item => {
-          item.addEventListener("click", () => {
-            const section = item.dataset.section || "dashboard";
-            setSection(section);
+        document.getElementById("quickAction").onclick = () => {
+          activeScreen = "transaksi";
+          render();
+        };
+      }
 
-            navContainer.querySelectorAll(".nav-item").forEach(i => i.classList.remove("active"));
-            item.classList.add("active");
+      function renderRab() {
+        if (!canAccess("rab")) return;
+        const canEdit = getCurrentUser().role === "Bendahara";
+
+        document.getElementById("screen-rab").innerHTML = `
+          <div class="section">
+            <div class="section-header">
+              <h3>Anggaran / RAB</h3>
+              <span class="muted">${canEdit ? "Mode edit" : "Mode baca"}</span>
+            </div>
+
+            ${canEdit ? `
+              <form id="rabForm">
+                <div class="form-grid">
+                  <div class="field">
+                    <label>Divisi</label>
+                    <select name="division" required>
+                      ${state.divisions.map(d => `<option value="${d.name}">${d.name}</option>`).join("")}
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label>Kategori</label>
+                    <input type="text" name="category" placeholder="Contoh: Konsumsi" required />
+                  </div>
+                  <div class="field">
+                    <label>Nominal</label>
+                    <input type="number" name="amount" min="0" step="1000" placeholder="0" required />
+                  </div>
+                  <div class="field">
+                    <label>Catatan</label>
+                    <input type="text" name="notes" placeholder="Catatan tambahan" />
+                  </div>
+                </div>
+                <div style="margin-top:12px;">
+                  <button type="submit" class="btn primary">Simpan RAB</button>
+                </div>
+              </form>
+            ` : ""}
+
+            <div style="margin-top:18px;">
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Divisi</th>
+                      <th>Kategori</th>
+                      <th>Nominal</th>
+                      <th>Catatan</th>
+                      ${canEdit ? "<th>Aksi</th>" : ""}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${state.rab.map(item => `
+                      <tr>
+                        <td>${item.division}</td>
+                        <td>${item.category}</td>
+                        <td>${formatCurrency(item.amount)}</td>
+                        <td>${item.notes || "-"}</td>
+                        ${canEdit ? `<td><button class="btn danger btn-delete-rab" data-id="${item.id}">Hapus</button></td>` : ""}
+                      </tr>
+                    `).join("") || `<tr><td colspan="${canEdit ? 5 : 4}"><div class="empty">Belum ada RAB.</div></td></tr>`}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+
+        document.getElementById("rabForm")?.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const fd = new FormData(e.target);
+          const division = String(fd.get("division") || "").trim();
+          const category = String(fd.get("category") || "").trim();
+          const amount = parseNumber(fd.get("amount"));
+          const notes = String(fd.get("notes") || "").trim();
+
+          if (!division || !category || amount <= 0) {
+            alert("Divisi, kategori, dan nominal harus diisi dengan benar.");
+            return;
+          }
+
+          state.rab.push({ id: "rab-" + Date.now(), division, category, amount, notes });
+          saveState();
+          recordAudit("Tambah RAB", `Menambahkan item ${category} untuk ${division}`);
+          render();
+        });
+
+        document.querySelectorAll(".btn-delete-rab").forEach(button => {
+          button.addEventListener("click", () => {
+            const id = button.dataset.id;
+            state.rab = state.rab.filter(r => r.id !== id);
+            saveState();
+            recordAudit("Hapus RAB", `Menghapus item RAB ${id}`);
+            render();
           });
         });
       }
 
-      function renderStats() {
-        const role = roles[activeRole];
-        const statsGrid = document.getElementById("statsGrid");
-        if (!statsGrid) return;
+      function renderPengajuan() {
+        if (!canAccess("pengajuan")) return;
+        const currentUser = getCurrentUser();
+        const isBendahara = currentUser.role === "Bendahara";
+        const isKoordinator = currentUser.role === "Koordinator Divisi";
+        const isKetua = currentUser.role === "Ketua Panitia";
 
-        statsGrid.innerHTML = role.stats.map(item => `
-          <div class="card stat-card">
-            <div class="stat-top">
-              <div><p class="label">${item.label}</p></div>
-              <div class="stat-icon ${item.icon}">${item.trendType === "down" ? "↘" : "↗"}</div>
-            </div>
-            <p class="stat-value">${item.value}</p>
-            <span class="trend ${item.trendType === "down" ? "down" : "up"}">
-              ${item.trendType === "down" ? "▼" : "▲"} ${item.trend}
-            </span>
-          </div>
-        `).join("");
-      }
-
-      function renderSummary() {
-        const role = roles[activeRole];
-        const summaryList = document.getElementById("summaryList");
-        if (!summaryList) return;
-
-        summaryList.innerHTML = role.summary.map(item => `
-          <div class="mini-item">
-            <span class="mini-bullet" style="background:${item.color};"></span>
-            <div>
-              <strong>${item.label}</strong>
-              <small>${item.extra}</small>
-            </div>
-            <div class="value">${item.value}</div>
-          </div>
-        `).join("");
-      }
-
-      function renderTable() {
-        const tableBody = document.getElementById("transactionTableBody");
-        if (!tableBody) return;
-
-        const data = [
-          { code: "TRX-1042", category: "Logistik", division: "Acara", value: "-3500000", status: "paid" },
-          { code: "TRX-1039", category: "Donasi", division: "Umum", value: "+8000000", status: "paid" },
-          { code: "TRX-1037", category: "Transport", division: "Publikasi", value: "-2150000", status: "pending" },
-          { code: "TRX-1034", category: "Honor", division: "Panitia", value: "-5750000", status: "review" },
-          { code: "TRX-1032", category: "Transfer Internal", division: "Keuangan", value: "+6000000", status: "paid" }
-        ];
-
-        tableBody.innerHTML = data.map(row => {
-          const isPositive = row.value.startsWith("+");
-          const statusText =
-            row.status === "paid" ? "Diposting" :
-            row.status === "pending" ? "Menunggu" :
-            row.status === "review" ? "Tinjau" :
-            "Dibatalkan";
-
-          return `
-            <tr>
-              <td>${row.code}</td>
-              <td>${row.category}</td>
-              <td>${row.division}</td>
-              <td class="money ${isPositive ? "in" : "out"}">${formatRupiah(row.value.replace(/[+]/g, ""))}</td>
-              <td><span class="status ${row.status}">${statusText}</span></td>
-              <td><span class="action-link">Detail</span></td>
-            </tr>
-          `;
-        }).join("");
-      }
-
-      function renderLabels() {
-        const role = roles[activeRole];
-        document.getElementById("pageTitle").textContent = role.pageTitle;
-        document.getElementById("pageSubtitle").textContent = role.subtitle;
-        document.getElementById("userRoleDisplay").textContent = role.label;
-        document.getElementById("userNameDisplay").textContent = role.user.name;
-        document.getElementById("avatarInitial").textContent = role.user.initial;
-        document.getElementById("quickAction").textContent = role.quickAction;
-
-        document.getElementById("chartTitle").textContent = role.chartTitle;
-        document.getElementById("chartMeta").textContent = role.chartMeta;
-        document.getElementById("summaryTitle").textContent = role.summaryTitle;
-        document.getElementById("summaryMeta").textContent = role.summaryMeta;
-        document.getElementById("tableTitle").textContent = role.tableTitle;
-        document.getElementById("tableMeta").textContent = role.tableMeta;
-        document.getElementById("formTitle").textContent = role.formTitle;
-        document.getElementById("formMeta").textContent = role.formMeta;
-      }
-
-      function renderPage() {
-        renderRoleButtons();
-        renderNavMenu();
-        renderStats();
-        renderSummary();
-        renderTable();
-        renderLabels();
-        setSection(activeSection);
-      }
-
-      const sidebar = document.getElementById("sidebar");
-      const mobileToggle = document.getElementById("mobileToggle");
-
-      if (mobileToggle) {
-        mobileToggle.addEventListener("click", () => {
-          sidebar.classList.toggle("open");
+        const visibleSubmissions = state.submissions.filter(item => {
+          if (isBendahara || isKetua) return true;
+          if (isKoordinator) return item.requestorId === currentUser.id;
+          return true;
         });
-      }
 
-      document.addEventListener("click", (event) => {
-        if (window.innerWidth <= 840) {
-          const clickedInsideSidebar = sidebar.contains(event.target);
-          const clickedToggle = mobileToggle && mobileToggle.contains(event.target);
+        document.getElementById("screen-pengajuan").innerHTML = `
+          <div class="section">
+            <div class="section-header">
+              <h3>Pengajuan Dana</h3>
+              <span class="muted">${isBendahara ? "Review dan approve" : "Daftar pengajuan"}</span>
+            </div>
 
-          if (!clickedInsideSidebar && !clickedToggle) {
-            sidebar.classList.remove("open");
+            ${(isKoordinator || isBendahara) ? `
+              <form id="submissionForm">
+                <div class="form-grid">
+                  <div class="field">
+                    <label>Divisi</label>
+                    <select name="division" required>
+                      ${state.divisions.map(d => `<option value="${d.name}">${d.name}</option>`).join("")}
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label>Judul Pengajuan</label>
+                    <input type="text" name="title" placeholder="Judul pengajuan" required />
+                  </div>
+                  <div class="field">
+                    <label>Kategori</label>
+                    <input type="text" name="category" placeholder="Contoh: Konsumsi" required />
+                  </div>
+                  <div class="field">
+                    <label>Nominal</label>
+                    <input type="number" name="nominal" min="0" step="1000" placeholder="0" required />
+                  </div>
+                  <div class="field">
+                    <label>Tanggal</label>
+                    <input type="date" name="date" required />
+                  </div>
+                  <div class="field">
+                    <label>Lampiran</label>
+                    <input type="text" name="attachment" placeholder="dokumen.pdf" />
+                  </div>
+                  <div class="field full">
+                    <label>Keterangan</label>
+                    <textarea name="notes" placeholder="Tujuan penggunaan dana"></textarea>
+                  </div>
+                </div>
+                <div style="margin-top:12px;">
+                  <button type="submit" class="btn primary">Kirim Pengajuan</button>
+                </div>
+              </form>
+            ` : ""}
+
+            <div style="margin-top:20px;">
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Divisi</th>
+                      <th>Judul</th>
+                      <th>Kategori</th>
+                      <th>Nominal</th>
+                      <th>Tanggal</th>
+                      <th>Status</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${visibleSubmissions.map(item => {
+                      const pemohon = getUserById(item.requestorId);
+                      let actions = "<span class='muted'>-</span>";
+
+                      if (isBendahara) {
+                        actions = `
+                          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                            <button class="btn primary btn-status" data-id="${item.id}" data-status="Disetujui">Setuju</button>
+                            <button class="btn warning btn-status" data-id="${item.id}" data-status="Perlu Revisi">Revisi</button>
+                            <button class="btn danger btn-status" data-id="${item.id}" data-status="Ditolak">Tolak</button>
+                          </div>
+                        `;
+                      } else if (isKoordinator && item.requestorId === currentUser.id) {
+                        actions = `<button class="btn secondary btn-status" data-id="${item.id}" data-status="Diajukan">Ajukan Ulang</button>`;
+                      }
+
+                      return `
+                        <tr>
+                          <td>${item.division}</td>
+                          <td><strong>${item.title}</strong><br><span class="muted" style="font-size:0.76rem;">Pemohon: ${pemohon ? pemohon.name : "-"}</span></td>
+                          <td>${item.category}</td>
+                          <td>${formatCurrency(item.nominal)}</td>
+                          <td>${formatDate(item.date)}</td>
+                          <td><span class="${statusBadgeClass(item.status)}">${item.status}</span></td>
+                          <td>${actions}</td>
+                        </tr>
+                      `;
+                    }).join("") || `<tr><td colspan="7"><div class="empty">Belum ada pengajuan.</div></td></tr>`}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+
+        document.getElementById("submissionForm")?.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const fd = new FormData(e.target);
+          const title = String(fd.get("title") || "").trim();
+          const category = String(fd.get("category") || "").trim();
+          const division = String(fd.get("division") || "").trim();
+          const date = String(fd.get("date") || "").trim();
+          const nominal = parseNumber(fd.get("nominal"));
+
+          if (!title || !category || !division || !date || nominal <= 0) {
+            alert("Judul, kategori, divisi, tanggal, dan nominal wajib diisi.");
+            return;
           }
-        }
-      });
 
-      document.querySelectorAll(".status-chip").forEach(chip => {
-        chip.addEventListener("click", () => {
-          document.querySelectorAll(".status-chip").forEach(c => c.classList.remove("active"));
-          chip.classList.add("active");
+          state.submissions.unshift({
+            id: "sub-" + Date.now(),
+            requestorId: currentUser.id,
+            division,
+            title,
+            category,
+            nominal,
+            date,
+            status: "Diajukan",
+            notes: String(fd.get("notes") || "").trim(),
+            attachment: String(fd.get("attachment") || "").trim() || "-"
+          });
+
+          saveState();
+          recordAudit("Buat pengajuan", `${title} • ${formatCurrency(nominal)}`);
+          render();
         });
-      });
+
+        document.querySelectorAll(".btn-status").forEach(button => {
+          button.addEventListener("click", () => {
+            const id = button.dataset.id;
+            const status = button.dataset.status;
+            state.submissions = state.submissions.map(item => item.id === id ? { ...item, status } : item);
+            saveState();
+            recordAudit("Ubah status pengajuan", `ID ${id} -> ${status}`);
+            render();
+          });
+        });
+      }
+
+      function renderTransaksi() {
+        if (!canAccess("transaksi")) return;
+        const isBendahara = getCurrentUser().role === "Bendahara";
+
+        document.getElementById("screen-transaksi").innerHTML = `
+          <div class="section">
+            <div class="section-header">
+              <h3>Transaksi Keuangan</h3>
+              <span class="muted">${isBendahara ? "Input dan posting" : "Read only"}</span>
+            </div>
+
+            ${isBendahara ? `
+              <form id="transactionForm">
+                <div class="form-grid">
+                  <div class="field">
+                    <label>Jenis</label>
+                    <select name="type" required>
+                      <option value="Pemasukan">Pemasukan</option>
+                      <option value="Pengeluaran">Pengeluaran</option>
+                      <option value="Transfer">Transfer Internal</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label>Tanggal</label>
+                    <input type="date" name="date" required />
+                  </div>
+                  <div class="field">
+                    <label>Deskripsi</label>
+                    <input type="text" name="description" placeholder="Deskripsi transaksi" required />
+                  </div>
+                  <div class="field">
+                    <label>Kategori</label>
+                    <input type="text" name="category" placeholder="Contoh: Sponsor" required />
+                  </div>
+                  <div class="field">
+                    <label>Akun</label>
+                    <select name="accountId" required>
+                      ${state.accounts.map(a => `<option value="${a.id}">${a.name}</option>`).join("")}
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label>Divisi</label>
+                    <select name="division">
+                      <option value="-">-</option>
+                      ${state.divisions.map(d => `<option value="${d.name}">${d.name}</option>`).join("")}
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label>Nominal</label>
+                    <input type="number" name="nominal" min="0" step="1000" placeholder="0" required />
+                  </div>
+                  <div class="field">
+                    <label>Transfer Tujuan</label>
+                    <select name="toAccountId">
+                      <option value="">-</option>
+                      ${state.accounts.map(a => `<option value="${a.id}">${a.name}</option>`).join("")}
+                    </select>
+                  </div>
+                </div>
+                <div style="margin-top:14px;">
+                  <button type="submit" class="btn primary">Posting Transaksi</button>
+                </div>
+              </form>
+            ` : `<div class="summary-box">Anda hanya dapat melihat transaksi keuangan.</div>`}
+
+            <div style="margin-top:18px;">
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Tanggal</th>
+                      <th>Deskripsi</th>
+                      <th>Jenis</th>
+                      <th>Akun</th>
+                      <th>Nominal</th>
+                      <th>Divisi</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${state.transactions.map(tx => `
+                      <tr>
+                        <td>${formatDate(tx.date)}</td>
+                        <td>${tx.description}</td>
+                        <td><span class="badge ${tx.type === "Pemasukan" ? "income" : tx.type === "Pengeluaran" ? "expense" : "transfer"}">${tx.type}</span></td>
+                        <td>${getAccountById(tx.accountId)?.name || "-"}</td>
+                        <td class="money ${tx.type === "Pemasukan" ? "in" : "out"}">${tx.type === "Pemasukan" ? "+" : "-"}${formatCurrency(tx.nominal)}</td>
+                        <td>${tx.division || "-"}</td>
+                        <td>${tx.status}</td>
+                      </tr>
+                    `).join("") || `<tr><td colspan="7"><div class="empty">Belum ada transaksi.</div></td></tr>`}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+
+        document.getElementById("transactionForm")?.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const fd = new FormData(e.target);
+          const type = String(fd.get("type") || "");
+          const description = String(fd.get("description") || "").trim();
+          const category = String(fd.get("category") || "").trim();
+          const accountId = String(fd.get("accountId") || "");
+          const date = String(fd.get("date") || "").trim();
+          const division = String(fd.get("division") || "-").trim();
+          const nominal = parseNumber(fd.get("nominal"));
+
+          if (!type || !description || !category || !accountId || !date || nominal <= 0) {
+            alert("Data transaksi tidak lengkap atau nominal tidak valid.");
+            return;
+          }
+
+          if (type === "Transfer") {
+            const to = String(fd.get("toAccountId") || "");
+            if (!to || to === accountId) {
+              alert("Untuk transfer internal, pilih akun tujuan yang berbeda.");
+              return;
+            }
+          }
+
+          const payload = {
+            id: "tx-" + Date.now(),
+            date,
+            description,
+            type,
+            category,
+            accountId,
+            division: division || "-",
+            nominal,
+            status: "Diposting"
+          };
+
+          if (type === "Transfer") {
+            payload.fromAccountId = accountId;
+            payload.toAccountId = String(fd.get("toAccountId") || accountId);
+          }
+
+          state.transactions.unshift(payload);
+          saveState();
+          recordAudit("Posting transaksi", `${type} • ${description} • ${formatCurrency(nominal)}`);
+          render();
+        });
+      }
+
+      function renderLaporan() {
+        if (!canAccess("laporan")) return;
+        const cash = getAccountBalance("acc-cash");
+        const bank = getAccountBalance("acc-bank");
+        const income = totalPemasukan();
+        const expense = totalPengeluaran();
+
+        document.getElementById("pageTitle").textContent = "Laporan";
+        document.getElementById("pageSubtitle").textContent = "Ringkasan keuangan dan realisasi";
+
+        document.getElementById("screen-laporan").innerHTML = `
+          <div class="section">
+            <div class="section-header">
+              <h3>Laporan Keuangan</h3>
+              <span class="muted">PDF / Excel</span>
+            </div>
+
+            <div class="grid-2">
+              <div class="list-card">
+                <div class="mini-label">Pemasukan</div>
+                <div class="big-number">${formatCurrency(income)}</div>
+              </div>
+              <div class="list-card">
+                <div class="mini-label">Pengeluaran</div>
+                <div class="big-number">${formatCurrency(expense)}</div>
+              </div>
+              <div class="list-card">
+                <div class="mini-label">Saldo Kas</div>
+                <div class="big-number">${formatCurrency(cash)}</div>
+              </div>
+              <div class="list-card">
+                <div class="mini-label">Saldo Bank</div>
+                <div class="big-number">${formatCurrency(bank)}</div>
+              </div>
+            </div>
+
+            <div style="margin-top:20px;">
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Divisi</th>
+                      <th>RAB</th>
+                      <th>Realisasi</th>
+                      <th>Sisa</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${state.divisions.map(div => {
+                      const rabTotal = state.rab.filter(r => r.division === div.name).reduce((sum, r) => sum + parseNumber(r.amount), 0);
+                      const realized = state.transactions.filter(tx => tx.division === div.name && tx.type === "Pengeluaran").reduce((sum, tx) => sum + parseNumber(tx.nominal), 0);
+                      return `
+                        <tr>
+                          <td>${div.name}</td>
+                          <td>${formatCurrency(rabTotal)}</td>
+                          <td>${formatCurrency(realized)}</td>
+                          <td>${formatCurrency(rabTotal - realized)}</td>
+                        </tr>
+                      `;
+                    }).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderAudit() {
+        if (!canAccess("audit")) return;
+
+        document.getElementById("screen-audit").innerHTML = `
+          <div class="section">
+            <div class="section-header">
+              <h3>Audit Log</h3>
+              <span class="muted">Jejak aktivitas</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Waktu</th>
+                    <th>Pengguna</th>
+                    <th>Aksi</th>
+                    <th>Detail</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${state.auditLog.map(log => `
+                    <tr>
+                      <td>${log.time}</td>
+                      <td>${log.actor}</td>
+                      <td>${log.action}</td>
+                      <td>${log.detail}</td>
+                    </tr>
+                  `).join("") || `<tr><td colspan="4"><div class="empty">Belum ada log audit.</div></td></tr>`}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderUsers() {
+        if (!canAccess("users")) return;
+
+        document.getElementById("screen-users").innerHTML = `
+          <div class="section">
+            <div class="section-header">
+              <h3>Kelola Pengguna</h3>
+              <span class="muted">Admin only</span>
+            </div>
+
+            <form id="userForm">
+              <div class="form-grid">
+                <div class="field">
+                  <label>Nama</label>
+                  <input type="text" name="name" required />
+                </div>
+                <div class="field">
+                  <label>Email</label>
+                  <input type="email" name="email" required />
+                </div>
+                <div class="field">
+                  <label>Role</label>
+                  <select name="role" required>
+                    <option value="Admin">Admin</option>
+                    <option value="Ketua Panitia">Ketua Panitia</option>
+                    <option value="Koordinator Divisi">Koordinator Divisi</option>
+                    <option value="Bendahara">Bendahara</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>Divisi</label>
+                  <input type="text" name="divisi" placeholder="Opsional" />
+                </div>
+              </div>
+              <div style="margin-top:12px;">
+                <button class="btn primary" type="submit">Tambah User</button>
+              </div>
+            </form>
+
+            <div style="margin-top:20px;">
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Nama</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Divisi</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${state.users.map(user => `
+                      <tr>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.role}</td>
+                        <td>${user.divisi || "-"}</td>
+                        <td><button class="btn danger btn-delete-user" data-id="${user.id}" ${user.id === state.currentUserId ? "disabled" : ""}>Hapus</button></td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+
+        document.getElementById("userForm").addEventListener("submit", (e) => {
+          e.preventDefault();
+          const fd = new FormData(e.target);
+          const name = String(fd.get("name") || "").trim();
+          const email = String(fd.get("email") || "").trim();
+          const role = String(fd.get("role") || "").trim();
+          const divisi = String(fd.get("divisi") || "").trim();
+
+          if (!name || !email || !role) {
+            alert("Nama, email, dan role wajib diisi.");
+            return;
+          }
+
+          state.users.push({
+            id: "u-" + Date.now(),
+            name,
+            email,
+            role,
+            divisi: divisi || "-"
+          });
+
+          saveState();
+          recordAudit("Tambah user", `${name} (${role})`);
+          render();
+        });
+
+        document.querySelectorAll(".btn-delete-user").forEach(button => {
+          button.addEventListener("click", () => {
+            const id = button.dataset.id;
+            if (id === state.currentUserId) {
+              alert("Tidak bisa menghapus user yang sedang aktif.");
+              return;
+            }
+            state.users = state.users.filter(u => u.id !== id);
+            saveState();
+            recordAudit("Hapus user", `User dihapus dari sistem`);
+            render();
+          });
+        });
+      }
+
+      function render() {
+        renderScreenVisibility();
+        renderNav();
+        updateHeaderMeta();
+
+        if (canAccess("dashboard")) renderDashboard();
+        if (canAccess("rab")) renderRab();
+        if (canAccess("pengajuan")) renderPengajuan();
+        if (canAccess("transaksi")) renderTransaksi();
+        if (canAccess("laporan")) renderLaporan();
+        if (canAccess("audit")) renderAudit();
+        if (canAccess("users")) renderUsers();
+
+        document.getElementById("globalSearch").addEventListener("input", (e) => {
+          const keyword = e.target.value.trim().toLowerCase();
+          const rows = document.querySelectorAll("tbody tr");
+          rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(keyword) || !keyword ? "" : "none";
+          });
+        });
+      }
 
       document.getElementById("quickAction").addEventListener("click", () => {
-        activeSection = "transactions";
-        setSection("transactions");
-        renderNavMenu();
+        activeScreen = "transaksi";
+        render();
       });
 
-      const fileUpload = document.getElementById("fileUpload");
-      if (fileUpload) {
-        fileUpload.addEventListener("change", function () {
-          const file = this.files && this.files[0];
-          const preview = document.getElementById("fileName");
-          if (file) {
-            preview.textContent = "File terpilih: " + file.name;
-            preview.classList.add("show");
-          } else {
-            preview.textContent = "Belum ada file dipilih";
-            preview.classList.remove("show");
-          }
-        });
-      }
-
-      const nominalInput = document.getElementById("nominal");
-      if (nominalInput) {
-        nominalInput.addEventListener("input", function () {
-          const digits = this.value.replace(/[^\d]/g, "");
-          this.value = digits ? formatRupiah(digits) : "";
-        });
-      }
-
-      renderPage();
+      render();
     </script>
   </body>
 </html>
