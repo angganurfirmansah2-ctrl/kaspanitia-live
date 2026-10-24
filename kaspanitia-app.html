@@ -922,11 +922,6 @@
             </div>
           </div>
         `;
-
-        document.getElementById("quickAction").onclick = () => {
-          activeScreen = "transaksi";
-          render();
-        };
       }
 
       function renderRab() {
@@ -1539,6 +1534,28 @@
         });
       }
 
+      function attachStaticEvents() {
+        const searchInput = document.getElementById("globalSearch");
+        if (searchInput) {
+          searchInput.oninput = (e) => {
+            const keyword = e.target.value.trim().toLowerCase();
+            const rows = document.querySelectorAll("tbody tr");
+            rows.forEach(row => {
+              const text = row.textContent.toLowerCase();
+              row.style.display = (!keyword || text.includes(keyword)) ? "" : "none";
+            });
+          };
+        }
+
+        const quickAction = document.getElementById("quickAction");
+        if (quickAction) {
+          quickAction.onclick = () => {
+            activeScreen = "transaksi";
+            render();
+          };
+        }
+      }
+
       function render() {
         renderScreenVisibility();
         renderNav();
@@ -1551,22 +1568,9 @@
         if (canAccess("laporan")) renderLaporan();
         if (canAccess("audit")) renderAudit();
         if (canAccess("users")) renderUsers();
-
-        document.getElementById("globalSearch").addEventListener("input", (e) => {
-          const keyword = e.target.value.trim().toLowerCase();
-          const rows = document.querySelectorAll("tbody tr");
-          rows.forEach(row => {
-            const text = row.textContent.toLowerCase();
-            row.style.display = text.includes(keyword) || !keyword ? "" : "none";
-          });
-        });
       }
 
-      document.getElementById("quickAction").addEventListener("click", () => {
-        activeScreen = "transaksi";
-        render();
-      });
-
+      attachStaticEvents();
       render();
     </script>
   </body>
