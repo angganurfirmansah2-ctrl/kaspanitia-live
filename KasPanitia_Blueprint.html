@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Blueprint aplikasi KasPanitia - Sistem Informasi Keuangan Kepanitiaan">
+<title>Blueprint Aplikasi KasPanitia</title>
+<style>
+:root{--green:#245447;--green-light:#e8f1ed;--text:#26312d;--muted:#64716b;--border:#d6e0db;--paper:#fff;--bg:#f4f7f5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+header{background:linear-gradient(135deg,#173f35,var(--green));color:#fff;padding:42px 20px 36px}
+.hero{max-width:1050px;margin:auto}
+.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.76rem;opacity:.82}
+h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.12;margin:.5rem 0}
+header p{max-width:720px;color:#e1ece7;margin:.7rem 0 0}
+nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 3px 12px #163c3010}
+.nav-inner{max-width:1050px;margin:auto;padding:10px 16px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--green);padding:7px 10px;border-radius:8px;font-size:.9rem}
+nav a:hover{background:var(--green-light)}
+main{max-width:1050px;margin:26px auto;padding:0 16px 45px}
+section{background:var(--paper);border:1px solid var(--border);border-radius:14px;padding:24px;margin:0 0 18px;box-shadow:0 4px 18px #163c3008;scroll-margin-top:75px}
+h2{color:var(--green);font-size:1.35rem;margin:0 0 14px;border-bottom:1px solid var(--border);padding-bottom:8px}
+h3{color:var(--green);font-size:1.04rem;margin:20px 0 8px}
+p{margin:8px 0 12px}
+ul,ol{padding-left:23px}
+li{margin:5px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0 6px;font-size:.94rem}
+th,td{border:1px solid var(--border);padding:10px 11px;text-align:left;vertical-align:top}
+th{background:var(--green);color:white}
+tbody tr:nth-child(odd){background:#f5f9f7}
+.callout{background:var(--green-light);border-left:4px solid var(--green);padding:13px 15px;border-radius:5px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.tile{background:#f5f9f7;border:1px solid var(--border);padding:15px;border-radius:10px}
+.tile strong{display:block;color:var(--green);margin-bottom:4px}
+footer{text-align:center;color:var(--muted);padding:22px 16px;font-size:.88rem}
+@media(max-width:640px){section{padding:17px;border-radius:10px}table{font-size:.85rem}th,td{padding:8px}header{padding:32px 18px}}
+@media print{body{background:#fff}nav{display:none}main{max-width:none;margin:0;padding:0}section{box-shadow:none;break-inside:avoid;border:0;border-bottom:1px solid #ddd;border-radius:0;padding:16px 0}header{background:#fff;color:#111;padding:20px 0}header p{color:#333}th{background:#eee;color:#111}footer{padding:10px}}
+</style>
+</head>
+<body>
+<header><div class="hero">
+<div class="eyebrow">Dokumen rancangan aplikasi</div>
+<h1>KasPanitia</h1>
+<p>Sistem Informasi Keuangan Kepanitiaan — blueprint fitur, alur kerja, hak akses, dan kebutuhan data.</p>
+</div></header>
+<nav><div class="nav-inner">
+<a href="#ringkasan">Ringkasan</a><a href="#tujuan">Tujuan</a><a href="#akses">Hak Akses</a><a href="#fitur">Fitur</a><a href="#alur">Alur Kerja</a><a href="#data">Struktur Data</a><a href="#aturan">Aturan</a><a href="#keamanan">Keamanan</a><a href="#ruang-lingkup">Ruang Lingkup</a>
+</div></nav>
+<main>
+
+<section id="ringkasan"><h2>1. Ringkasan Aplikasi</h2>
+<p>KasPanitia adalah aplikasi web responsif yang dirancang untuk membantu panitia mengelola anggaran dan keuangan kegiatan secara tertib, transparan, dan mudah ditelusuri. Aplikasi mencakup pencatatan pemasukan dan pengeluaran, pengelolaan kas tunai dan rekening bank, pengajuan dana antar-divisi, lampiran bukti transaksi, pemantauan anggaran, serta pembuatan laporan.</p>
+<div style='overflow-x:auto'><table><thead><tr>
+<th>Komponen</th>
+<th>Penjelasan</th>
+</tr></thead><tbody>
+<tr>
+<td>Nama aplikasi</td>
+<td>KasPanitia</td>
+</tr>
+<tr>
+<td>Kategori</td>
+<td>Sistem Informasi Keuangan Kepanitiaan</td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Web responsif untuk desktop dan perangkat mobile</td>
+</tr>
+<tr>
+<td>Target pengguna</td>
+<td>Panitia kegiatan kampus, seminar, pelatihan, workshop, lomba, organisasi mahasiswa, dan kegiatan komunitas</td>
+</tr>
+<tr>
+<td>Tujuan utama</td>
+<td>Merapikan pencatatan keuangan, memantau saldo, membandingkan anggaran dengan realisasi, dan menyediakan laporan yang dapat diperiksa</td>
+</tr>
+</tbody></table></div>
+</section>
+<section id="tujuan"><h2>2. Tujuan dan Prinsip Sistem</h2>
+<ul><li>Mencatat seluruh pemasukan dan pengeluaran secara konsisten.</li></ul>
+<ul><li>Memisahkan saldo kas tunai dan rekening bank agar posisi dana jelas.</li></ul>
+<ul><li>Mendukung proses pengajuan dana oleh Koordinator Divisi dan pemeriksaan oleh Bendahara.</li></ul>
+<ul><li>Menyimpan foto struk, bukti transfer, atau dokumen pendukung bersama catatan terkait.</li></ul>
+<ul><li>Menampilkan anggaran, realisasi, sisa anggaran, dan laporan sesuai hak akses pengguna.</li></ul>
+<ul><li>Menjaga jejak perubahan penting agar koreksi transaksi dapat ditelusuri.</li></ul>
+<p>Prinsip nominal: semua nominal transaksi dan anggaran dibiarkan kosong secara default. Tidak ada angka transaksi contoh yang otomatis dianggap sebagai data nyata.</p>
+</section>
+<section id="akses"><h2>3. Pengguna dan Hak Akses</h2>
+<div style='overflow-x:auto'><table><thead><tr>
+<th>Peran</th>
+<th>Hak akses</th>
+<th>Batasan</th>
+</tr></thead><tbody>
+<tr>
+<td>Admin</td>
+<td>Mengelola akun pengguna: menambah akun, mengubah data akun, menetapkan role, dan menonaktifkan akun. Mengelola pengaturan sistem yang bersifat administratif.</td>
+<td>Tidak menginput, mengubah, menyetujui, atau memproses transaksi keuangan.</td>
+</tr>
+<tr>
+<td>Ketua Panitia</td>
+<td>Melihat dashboard, saldo kas/bank, anggaran dan realisasi, ringkasan pemasukan-pengeluaran, status pengajuan, serta laporan/LPJ.</td>
+<td>Akses hanya-baca (read-only). Tidak mengubah atau menghapus data keuangan dan tidak menjadi pemberi persetujuan wajib untuk setiap pengajuan.</td>
+</tr>
+<tr>
+<td>Koordinator Divisi</td>
+<td>Mengajukan dana untuk divisinya sendiri, mengisi nominal dan tujuan penggunaan, melihat status serta riwayat pengajuan divisinya, dan melampirkan bukti bila diperlukan.</td>
+<td>Hanya mengakses pengajuan milik divisinya sendiri; tidak mengelola transaksi atau melihat laporan keuangan lengkap seluruh kepanitiaan.</td>
+</tr>
+<tr>
+<td>Bendahara</td>
+<td>Mengatur data anggaran/RAB dan saldo awal; memeriksa pengajuan; menyetujui atau menolak sesuai kewenangannya; mencatat pemasukan dan pengeluaran; mengelola bukti; memeriksa saldo; membuat serta mengekspor laporan.</td>
+<td>Perubahan terhadap transaksi yang sudah dicatat harus memiliki jejak audit; transaksi tidak dihapus diam-diam.</td>
+</tr>
+</tbody></table></div>
+</section>
+<section id="fitur"><h2>4. Modul dan Fitur Utama</h2>
+<h3>4.1 Dashboard</h3>
+<p>Menampilkan ringkasan keuangan berdasarkan periode yang dipilih, antara lain:</p>
+<ul><li>Total pemasukan dan total pengeluaran.</li></ul>
+<ul><li>Saldo kas tunai dan saldo rekening bank.</li></ul>
+<ul><li>Total anggaran, realisasi, serta sisa anggaran.</li></ul>
+<ul><li>Jumlah pengajuan dana yang menunggu proses.</li></ul>
+<ul><li>Daftar transaksi terbaru dan statusnya.</li></ul>
+<h3>4.2 Anggaran / RAB</h3>
+<p>Bendahara dapat mencatat anggaran berdasarkan divisi dan kategori biaya. Sistem menghitung realisasi serta sisa anggaran dari transaksi yang sudah diposting. Nilai anggaran tidak diisi otomatis.</p>
+<h3>4.3 Pengajuan Dana</h3>
+<p>Koordinator Divisi membuat pengajuan dengan mengisi divisi, tujuan penggunaan, kategori, nominal, tanggal, keterangan, dan lampiran jika diperlukan. Status pengajuan dapat berupa Draf, Diajukan, Perlu Revisi, Disetujui, Ditolak, atau Dicairkan.</p>
+<p>Bendahara memeriksa kelengkapan, kesesuaian dengan RAB, dan bukti pendukung jika ada, kemudian menyetujui atau menolak sesuai kewenangannya. Ketua Panitia dapat memantau status, tetapi tidak wajib menyetujui setiap pengajuan.</p>
+<h3>4.4 Pemasukan dan Pengeluaran</h3>
+<p>Bendahara mencatat tanggal, deskripsi, jenis transaksi, kategori, akun kas, nominal, divisi terkait bila relevan, dan bukti transaksi. Transaksi yang belum lengkap dapat disimpan sebagai draf; hanya transaksi yang sudah diposting memengaruhi saldo dan laporan.</p>
+<h3>4.5 Kas Tunai dan Rekening Bank</h3>
+<p>Sistem memisahkan akun Kas Tunai dan Rekening Bank. Transfer antar-akun dicatat sebagai transfer internal, bukan pemasukan atau pengeluaran organisasi, agar total pendapatan dan biaya tidak terhitung ganda.</p>
+<h3>4.6 Bukti Struk dan Transfer</h3>
+<p>Pengguna yang berwenang dapat mengambil foto melalui kamera perangkat atau mengunggah gambar dari galeri. Bukti dapat berupa foto struk, bukti transfer, kuitansi, atau dokumen pendukung. Sistem menyediakan pratinjau bukti dan membatasi akses sesuai peran pengguna.</p>
+<p>Format gambar yang disarankan: JPG, PNG, atau WEBP. Lampiran sebaiknya menyimpan nama file, waktu unggah, dan pengunggah.</p>
+<h3>4.7 Laporan dan LPJ</h3>
+<ul><li>Laporan pemasukan dan pengeluaran berdasarkan periode.</li></ul>
+<ul><li>Laporan saldo kas tunai dan rekening bank.</li></ul>
+<ul><li>Realisasi dan sisa anggaran per divisi/kategori.</li></ul>
+<ul><li>Daftar transaksi lengkap beserta status dan bukti.</li></ul>
+<ul><li>Laporan pertanggungjawaban (LPJ) untuk diperiksa Ketua Panitia.</li></ul>
+<ul><li>Filter periode, divisi, jenis transaksi, kategori, dan akun kas.</li></ul>
+<ul><li>Ekspor laporan ke PDF atau Excel.</li></ul>
+<h3>4.8 Pengelolaan Pengguna</h3>
+<p>Admin dapat membuat dan mengelola akun serta menentukan peran. Hak akses setiap pengguna mengikuti role yang ditetapkan. Akun yang sudah tidak digunakan dapat dinonaktifkan tanpa menghilangkan jejak transaksi.</p>
+<h3>4.9 Audit Log</h3>
+<p>Sistem menyimpan catatan aktivitas penting seperti pembuatan, perubahan, pembatalan, persetujuan, penolakan, dan pemostingan transaksi. Catatan mencakup pengguna, waktu, tindakan, data terkait, dan alasan perubahan jika diperlukan.</p>
+</section>
+<section id="alur"><h2>5. Alur Kerja Utama</h2>
+<div style='overflow-x:auto'><table><thead><tr>
+<th>Tahap</th>
+<th>Pelaksana</th>
+<th>Proses</th>
+</tr></thead><tbody>
+<tr>
+<td>1. Persiapan</td>
+<td>Admin dan Bendahara</td>
+<td>Admin mengatur akun dan role. Bendahara menyiapkan data kegiatan, divisi, akun kas/bank, saldo awal, dan RAB.</td>
+</tr>
+<tr>
+<td>2. Pengajuan</td>
+<td>Koordinator Divisi</td>
+<td>Mengirim permintaan dana dengan tujuan, nominal, kategori, dan lampiran jika diperlukan.</td>
+</tr>
+<tr>
+<td>3. Pemeriksaan</td>
+<td>Bendahara</td>
+<td>Memeriksa kelengkapan, kesesuaian RAB, dan saldo yang tersedia; meminta revisi atau memutuskan pengajuan.</td>
+</tr>
+<tr>
+<td>4. Pencairan</td>
+<td>Bendahara</td>
+<td>Mencatat pencairan/pengeluaran dan melampirkan bukti transfer atau bukti pembayaran.</td>
+</tr>
+<tr>
+<td>5. Pencatatan</td>
+<td>Bendahara</td>
+<td>Memastikan transaksi final tercatat pada akun yang benar dan memengaruhi saldo serta realisasi.</td>
+</tr>
+<tr>
+<td>6. Pemantauan</td>
+<td>Ketua Panitia</td>
+<td>Melihat dashboard, status pengajuan, ringkasan keuangan, dan laporan tanpa mengubah data.</td>
+</tr>
+<tr>
+<td>7. Pelaporan</td>
+<td>Bendahara</td>
+<td>Memfilter laporan sesuai periode dan mengekspor laporan/LPJ untuk ditinjau.</td>
+</tr>
+</tbody></table></div>
+</section>
+<section id="data"><h2>6. Struktur Data yang Dibutuhkan</h2>
+<div style='overflow-x:auto'><table><thead><tr>
+<th>Entitas</th>
+<th>Data utama</th>
+</tr></thead><tbody>
+<tr>
+<td>Pengguna</td>
+<td>ID, nama, email/login, role, divisi terkait bila ada, status akun.</td>
+</tr>
+<tr>
+<td>Kepanitiaan</td>
+<td>ID kegiatan, nama, deskripsi, periode, status.</td>
+</tr>
+<tr>
+<td>Divisi</td>
+<td>ID divisi, ID kegiatan, nama divisi, koordinator, status.</td>
+</tr>
+<tr>
+<td>Akun Kas</td>
+<td>ID akun, nama akun, tipe kas tunai/rekening bank, saldo awal, status.</td>
+</tr>
+<tr>
+<td>Anggaran/RAB</td>
+<td>Divisi, kategori, periode, nominal, catatan.</td>
+</tr>
+<tr>
+<td>Pengajuan Dana</td>
+<td>Pemohon, divisi, tujuan, kategori, nominal, tanggal, status, catatan Bendahara, lampiran.</td>
+</tr>
+<tr>
+<td>Transaksi</td>
+<td>Tanggal, deskripsi, jenis, kategori, akun, nominal, divisi terkait, status, pengajuan terkait.</td>
+</tr>
+<tr>
+<td>Bukti</td>
+<td>Jenis bukti, nama file, lokasi penyimpanan, pengunggah, waktu unggah.</td>
+</tr>
+<tr>
+<td>Audit Log</td>
+<td>Pengguna, tindakan, jenis/ID data, waktu, alasan dan perubahan yang relevan.</td>
+</tr>
+</tbody></table></div>
+</section>
+<section id="aturan"><h2>7. Aturan Perhitungan dan Validasi</h2>
+<ul><li>Saldo akhir = saldo awal + pemasukan yang diposting − pengeluaran yang diposting.</li></ul>
+<ul><li>Transfer internal mengurangi saldo akun asal dan menambah saldo akun tujuan, tanpa mengubah total pemasukan/pengeluaran organisasi.</li></ul>
+<ul><li>Pengajuan dana yang belum disetujui tidak mengubah saldo.</li></ul>
+<ul><li>Pengajuan yang disetujui belum otomatis mengurangi saldo; saldo berubah saat pencairan/pengeluaran dicatat sesuai prosedur.</li></ul>
+<ul><li>Nominal harus berupa angka positif; jenis transaksi menentukan apakah nilai menambah atau mengurangi saldo.</li></ul>
+<ul><li>Tanggal, akun, jenis transaksi, deskripsi, dan nominal wajib divalidasi sebelum transaksi diposting.</li></ul>
+<ul><li>Koreksi transaksi harus tercatat dalam audit log, termasuk alasan koreksi.</li></ul>
+</section>
+<section id="keamanan"><h2>8. Keamanan dan Pengalaman Pengguna</h2>
+<ul><li>Login untuk pengguna dan pembatasan akses berdasarkan role.</li></ul>
+<ul><li>Bukti transaksi disimpan dengan akses terbatas, bukan tautan publik terbuka.</li></ul>
+<ul><li>Tampilan responsif dan formulir yang mudah digunakan dari ponsel.</li></ul>
+<ul><li>Tombol ambil foto kamera dan unggah dari galeri pada kolom bukti.</li></ul>
+<ul><li>Konfirmasi sebelum menolak, membatalkan, atau mengoreksi data penting.</li></ul>
+<ul><li>Pesan validasi yang jelas ketika data belum lengkap.</li></ul>
+<ul><li>Pencadangan data secara berkala sesuai kemampuan platform implementasi.</li></ul>
+</section>
+<section id="ruang-lingkup"><h2>9. Ruang Lingkup Versi Awal</h2>
+<div style='overflow-x:auto'><table><thead><tr>
+<th>Termasuk versi awal</th>
+<th>Belum termasuk kecuali dikembangkan kemudian</th>
+</tr></thead><tbody>
+<tr>
+<td>Login dan role; pengelolaan akun; divisi; RAB; pengajuan dana; pencatatan pemasukan/pengeluaran; kas tunai dan rekening bank; bukti struk/foto; dashboard; laporan PDF/Excel; audit log; tampilan responsif.</td>
+<td>Integrasi langsung rekening bank; pembayaran online; notifikasi WhatsApp/SMS; tanda tangan digital tersertifikasi; integrasi ke sistem akuntansi eksternal; pengelolaan banyak kepanitiaan dalam satu akun.</td>
+</tr>
+</tbody></table></div>
+</section>
+<section id="implementasi"><h2>10. Catatan Implementasi</h2>
+<p>Dokumen ini merupakan blueprint fungsional, bukan aplikasi yang sudah berjalan. Implementasi berikutnya perlu menentukan teknologi, metode autentikasi, penyimpanan basis data dan file, aturan pencadangan, serta pengujian akses untuk setiap role. Rancangan perlu diuji menggunakan data kosong terlebih dahulu sebelum dipakai untuk transaksi keuangan nyata.</p>
+</section>
+</main>
+<footer>Blueprint KasPanitia · Dokumen rancangan fungsional</footer>
+</body>
+</html>
